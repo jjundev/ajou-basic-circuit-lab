@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="560" viewBox="0 0 920 560" role="img" aria-labelledby="title desc">
+  <title id="title">Graph 6.1: Voltage vs Frequency</title>
+  <desc id="desc">Overlayed line graph of V_C peak-to-peak and V_R peak-to-peak versus frequency using Table 6.1 data.</desc>
+  <metadata>
+    Data source: output/10주차_결과보고서.md Table 6.1
+    Frequency(kHz), V_C(p-p)(V), V_R(p-p)(V)
+    1, 1.67, 1.02
+    2, 1.25, 1.49
+    4, 0.75, 1.76
+    6, 0.52, 1.82
+    8, 0.40, 1.86
+    10, 0.33, 1.87
+  </metadata>
+
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .plot-bg { fill: #fbfbfd; }
+      .grid { stroke: #d7dbe3; stroke-width: 1; }
+      .axis { stroke: #1f2937; stroke-width: 1.5; }
+      .tick { stroke: #1f2937; stroke-width: 1; }
+      .label { fill: #111827; font: 14px Arial, Helvetica, sans-serif; }
+      .small { fill: #374151; font: 12px Arial, Helvetica, sans-serif; }
+      .title { fill: #111827; font: 700 22px Arial, Helvetica, sans-serif; }
+      .subtitle { fill: #4b5563; font: 13px Arial, Helvetica, sans-serif; }
+      .vc-line { fill: none; stroke: #1d4ed8; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .vr-line { fill: none; stroke: #dc2626; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .vc-point { fill: #ffffff; stroke: #1d4ed8; stroke-width: 2.5; }
+      .vr-point { fill: #ffffff; stroke: #dc2626; stroke-width: 2.5; }
+      .legend-box { fill: #ffffff; stroke: #d1d5db; stroke-width: 1; }
+      .coord { font: 12px Arial, Helvetica, sans-serif; paint-order: stroke; stroke: #ffffff; stroke-width: 4; stroke-linejoin: round; }
+      .vc-coord { fill: #1d4ed8; }
+      .vr-coord { fill: #dc2626; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="920" height="560"/>
+
+  <text class="title" x="92" y="36">Graph 6.1</text>
+  <text class="subtitle" x="92" y="58">Frequency response of the series R-C network, E_s = 2 V(p-p)</text>
+
+  <rect class="plot-bg" x="92" y="72" width="738" height="392"/>
+
+  <!-- Horizontal gridlines and y-axis ticks: 0.0 to 2.0 V -->
+  <line class="grid" x1="92" y1="464" x2="830" y2="464"/>
+  <line class="grid" x1="92" y1="366" x2="830" y2="366"/>
+  <line class="grid" x1="92" y1="268" x2="830" y2="268"/>
+  <line class="grid" x1="92" y1="170" x2="830" y2="170"/>
+  <line class="grid" x1="92" y1="72" x2="830" y2="72"/>
+
+  <!-- Vertical gridlines and x-axis ticks: 0 to 10 kHz -->
+  <line class="grid" x1="92" y1="72" x2="92" y2="464"/>
+  <line class="grid" x1="239.6" y1="72" x2="239.6" y2="464"/>
+  <line class="grid" x1="387.2" y1="72" x2="387.2" y2="464"/>
+  <line class="grid" x1="534.8" y1="72" x2="534.8" y2="464"/>
+  <line class="grid" x1="682.4" y1="72" x2="682.4" y2="464"/>
+  <line class="grid" x1="830" y1="72" x2="830" y2="464"/>
+
+  <!-- Axes -->
+  <line class="axis" x1="92" y1="464" x2="830" y2="464"/>
+  <line class="axis" x1="92" y1="72" x2="92" y2="464"/>
+
+  <!-- Tick marks -->
+  <line class="tick" x1="92" y1="464" x2="92" y2="470"/>
+  <line class="tick" x1="239.6" y1="464" x2="239.6" y2="470"/>
+  <line class="tick" x1="387.2" y1="464" x2="387.2" y2="470"/>
+  <line class="tick" x1="534.8" y1="464" x2="534.8" y2="470"/>
+  <line class="tick" x1="682.4" y1="464" x2="682.4" y2="470"/>
+  <line class="tick" x1="830" y1="464" x2="830" y2="470"/>
+
+  <line class="tick" x1="86" y1="464" x2="92" y2="464"/>
+  <line class="tick" x1="86" y1="366" x2="92" y2="366"/>
+  <line class="tick" x1="86" y1="268" x2="92" y2="268"/>
+  <line class="tick" x1="86" y1="170" x2="92" y2="170"/>
+  <line class="tick" x1="86" y1="72" x2="92" y2="72"/>
+
+  <!-- Tick labels -->
+  <text class="small" x="92" y="490" text-anchor="middle">0</text>
+  <text class="small" x="239.6" y="490" text-anchor="middle">2</text>
+  <text class="small" x="387.2" y="490" text-anchor="middle">4</text>
+  <text class="small" x="534.8" y="490" text-anchor="middle">6</text>
+  <text class="small" x="682.4" y="490" text-anchor="middle">8</text>
+  <text class="small" x="830" y="490" text-anchor="middle">10</text>
+
+  <text class="small" x="74" y="468" text-anchor="end">0.0</text>
+  <text class="small" x="74" y="370" text-anchor="end">0.5</text>
+  <text class="small" x="74" y="272" text-anchor="end">1.0</text>
+  <text class="small" x="74" y="174" text-anchor="end">1.5</text>
+  <text class="small" x="74" y="76" text-anchor="end">2.0</text>
+
+  <!-- Axis labels -->
+  <text class="label" x="461" y="526" text-anchor="middle">Frequency, f (kHz)</text>
+  <text class="label" x="28" y="268" text-anchor="middle" transform="rotate(-90 28 268)">Voltage, V(p-p) (V)</text>
+
+  <!-- Data lines: x = 92 + f/10*738, y = 464 - V/2*392 -->
+  <polyline class="vc-line" points="165.8,136.68 239.6,219 387.2,317 534.8,362.08 682.4,385.6 830,399.32"/>
+  <polyline class="vr-line" points="165.8,264.08 239.6,171.96 387.2,119.04 534.8,107.28 682.4,99.44 830,97.48"/>
+
+  <!-- V_C data points -->
+  <circle class="vc-point" cx="165.8" cy="136.68" r="4.5"/>
+  <circle class="vc-point" cx="239.6" cy="219" r="4.5"/>
+  <circle class="vc-point" cx="387.2" cy="317" r="4.5"/>
+  <circle class="vc-point" cx="534.8" cy="362.08" r="4.5"/>
+  <circle class="vc-point" cx="682.4" cy="385.6" r="4.5"/>
+  <circle class="vc-point" cx="830" cy="399.32" r="4.5"/>
+
+  <!-- V_R data points -->
+  <circle class="vr-point" cx="165.8" cy="264.08" r="4.5"/>
+  <circle class="vr-point" cx="239.6" cy="171.96" r="4.5"/>
+  <circle class="vr-point" cx="387.2" cy="119.04" r="4.5"/>
+  <circle class="vr-point" cx="534.8" cy="107.28" r="4.5"/>
+  <circle class="vr-point" cx="682.4" cy="99.44" r="4.5"/>
+  <circle class="vr-point" cx="830" cy="97.48" r="4.5"/>
+
+  <!-- Coordinate labels -->
+  <text class="coord vc-coord" x="172" y="130">(1 kHz, 1.67 V)</text>
+  <text class="coord vc-coord" x="247" y="231">(2 kHz, 1.25 V)</text>
+  <text class="coord vc-coord" x="394" y="329">(4 kHz, 0.75 V)</text>
+  <text class="coord vc-coord" x="542" y="374">(6 kHz, 0.52 V)</text>
+  <text class="coord vc-coord" x="690" y="398">(8 kHz, 0.40 V)</text>
+  <text class="coord vc-coord" x="824" y="417" text-anchor="end">(10 kHz, 0.33 V)</text>
+
+  <text class="coord vr-coord" x="158" y="282" text-anchor="end">(1 kHz, 1.02 V)</text>
+  <text class="coord vr-coord" x="247" y="164">(2 kHz, 1.49 V)</text>
+  <text class="coord vr-coord" x="394" y="112">(4 kHz, 1.76 V)</text>
+  <text class="coord vr-coord" x="542" y="100">(6 kHz, 1.82 V)</text>
+  <text class="coord vr-coord" x="690" y="92">(8 kHz, 1.86 V)</text>
+  <text class="coord vr-coord" x="824" y="91" text-anchor="end">(10 kHz, 1.87 V)</text>
+
+  <!-- Legend -->
+  <rect class="legend-box" x="612" y="14" width="190" height="44" rx="6"/>
+  <line class="vc-line" x1="630" y1="31" x2="670" y2="31"/>
+  <circle class="vc-point" cx="650" cy="31" r="4.5"/>
+  <text class="small" x="684" y="35">V_C(p-p)</text>
+  <line class="vr-line" x1="630" y1="49" x2="670" y2="49"/>
+  <circle class="vr-point" cx="650" cy="49" r="4.5"/>
+  <text class="small" x="684" y="53">V_R(p-p)</text>
+
+  <!-- Source note -->
+  <text class="small" x="830" y="536" text-anchor="end">Source: Table 6.1 measured data</text>
+</svg>

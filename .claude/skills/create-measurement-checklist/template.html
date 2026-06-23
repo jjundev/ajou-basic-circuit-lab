@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>{{WEEK}} 측정 체크리스트</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 12mm 12mm 14mm 12mm;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #111;
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 5mm;
+    border-bottom: 1px solid #1a1a1a;
+    margin-bottom: 6mm;
+  }
+  .header .left .label {
+    font-size: 7.5pt;
+    letter-spacing: 0.45em;
+    color: #888;
+    margin-bottom: 2mm;
+  }
+  .header .left .title {
+    font-size: 18pt;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .header .right {
+    text-align: right;
+    font-size: 8pt;
+    color: #666;
+    line-height: 1.6;
+  }
+  .header .right .course { color: #111; font-weight: 500; }
+
+  /* Summary box */
+  .summary {
+    border: 1px solid #d0d0d0;
+    padding: 4mm 5mm;
+    margin-bottom: 6mm;
+    font-size: 8.5pt;
+    color: #333;
+    background: #fafafa;
+  }
+  .summary h2 {
+    margin: 0 0 2mm 0;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #111;
+  }
+  .summary .stats {
+    display: flex;
+    gap: 6mm;
+    flex-wrap: wrap;
+  }
+  .summary .stat .k {
+    color: #888;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .summary .stat .v {
+    color: #111;
+    font-size: 11pt;
+    font-weight: 500;
+  }
+  .summary .meta {
+    margin-top: 3mm;
+    font-size: 7.5pt;
+    color: #666;
+  }
+
+  /* Table cards — atomic 단위는 카드 전체가 아닌 tr (행). 헤더 묶음은 다음 형제와 결합 유지. */
+  .card {
+    break-inside: auto;
+    page-break-inside: auto;
+    border: 1px solid #1a1a1a;
+    margin-bottom: 0;
+  }
+  .card + .card {
+    margin-top: 5mm;
+  }
+  .card-head {
+    padding: 3mm 4mm;
+    background: #1a1a1a;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-head .title {
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  .card-head .model {
+    font-size: 8pt;
+    color: #d8d8d8;
+    font-weight: 300;
+  }
+  .card-meta {
+    padding: 2.5mm 4mm;
+    border-bottom: 1px solid #d0d0d0;
+    font-size: 8pt;
+    color: #444;
+    background: #fafafa;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-meta .row { display: flex; gap: 4mm; }
+  .card-meta .k {
+    color: #888;
+    min-width: 18mm;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 7pt;
+    padding-top: 0.5mm;
+  }
+  .card-meta .v { color: #111; flex: 1; }
+
+  .card-inputs {
+    border-bottom: 1px solid #d0d0d0;
+    padding: 2mm 4mm;
+    background: #fff;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-inputs .inputs-title {
+    font-size: 7pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5mm;
+  }
+  .card-inputs .inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(38mm, 1fr));
+    gap: 2mm;
+  }
+
+  /* Data table */
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+  table.data thead {
+    display: table-header-group;  /* 페이지 넘김 시 헤더 행 자동 반복 */
+  }
+  table.data tbody tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  table.data th, table.data td {
+    border: 1px solid #d0d0d0;
+    padding: 2.5mm 2mm;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.35;
+  }
+  table.data thead th {
+    background: #f0f0f0;
+    color: #111;
+    font-weight: 600;
+    font-size: 8pt;
+    padding: 2.5mm 2mm 2mm 2mm;
+  }
+  table.data thead th .unit {
+    display: block;
+    font-size: 7pt;
+    color: #777;
+    font-weight: 400;
+    margin-top: 0.5mm;
+  }
+
+  /* Cell kinds */
+  .badge {
+    display: inline-block;
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.6mm 1.5mm;
+    border-radius: 1mm;
+    vertical-align: middle;
+    line-height: 1;
+  }
+  .badge-measure { background: #111; color: #fff; }
+  .badge-compute { background: #d8d8d8; color: #444; }
+  .badge-derived { background: #5a7a9a; color: #fff; }
+  .badge-fixed   { background: #ffeaa7; color: #6a4f00; }
+  .badge-input   { background: #fff3e0; color: #bf6a00; }
+
+  td.cell-independent {
+    background: #f6f6f6;
+    color: #444;
+    font-weight: 500;
+  }
+  /* independent cell that is also DMM-measured (v3: kind: independent | measured: true).
+     Reuses badge-measure styling but keeps the gray independent background so it remains visually
+     anchored as a row key. */
+  td.cell-independent.measured-hint {
+    background: #f6f6f6;
+    text-align: left;
+    padding: 2mm;
+  }
+  td.cell-independent.measured-hint .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #888;
+    margin-bottom: 1mm;
+  }
+  td.cell-independent.measured-hint .nominal {
+    color: #111;
+    font-weight: 600;
+    font-size: 8.5pt;
+  }
+  td.cell-independent.measured-hint .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-independent.measured-hint .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-measure {
+    background: #fff;
+    text-align: left;
+    padding: 2mm;
+  }
+  td.cell-measure .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #888;
+    margin-bottom: 1mm;
+  }
+  td.cell-measure .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-measure .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  td.cell-measure .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-measure .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  .cell-input {
+    background: #fff8ed;
+    border: 1px solid #e2c69a;
+    padding: 1.5mm;
+    text-align: left;
+    color: #333;
+  }
+  .cell-input .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #9a6400;
+    margin-bottom: 1mm;
+  }
+  .cell-input .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  .cell-input .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  .cell-input .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  .cell-input .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  td.cell-compute {
+    background: #f4f4f4;
+    text-align: left;
+    padding: 2mm;
+    color: #333;
+  }
+  td.cell-compute .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #777;
+    margin-bottom: 1mm;
+  }
+  td.cell-compute .formula {
+    font-family: 'Consolas', 'Menlo', monospace;
+    font-size: 7.5pt;
+    color: #222;
+  }
+  /* derived (v4): 측정값으로부터 환산해 채우는 셀. measured(흰)·computed(짙회)의 중간 톤 +
+     좌측 4px 회청 보더로 흑백 인쇄에서도 식별 단서 잔존. */
+  td.cell-derived {
+    background: #eef4fa;
+    border-left: 4px solid #5a7a9a;
+    text-align: left;
+    padding: 2mm;
+    color: #333;
+  }
+  td.cell-derived .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #5a7a9a;
+    margin-bottom: 1mm;
+  }
+  td.cell-derived .formula {
+    font-family: 'Consolas', 'Menlo', monospace;
+    font-size: 7.5pt;
+    color: #222;
+  }
+  td.cell-derived .input-strip {
+    border-top: 1px dashed #aaa;
+    padding-top: 1.5mm;
+    margin-bottom: 1.5mm;
+  }
+  td.cell-derived .input-strip .cell-input {
+    border: 0;
+    padding: 0;
+  }
+  td.cell-derived .ref {
+    color: #666;
+    font-style: italic;
+    font-size: 8pt;
+    margin-bottom: 1mm;
+  }
+  td.cell-derived .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-derived .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  td.cell-derived .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-derived .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  td.cell-fixed {
+    background: #fff9e6;
+    color: #6a4f00;
+    font-weight: 500;
+  }
+  td.cell-fixed .top {
+    font-size: 7pt;
+    color: #a07a00;
+    margin-bottom: 0.5mm;
+  }
+
+  /* Formula box for long formulas */
+  .formula-box {
+    padding: 2.5mm 4mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7.5pt;
+    color: #333;
+    background: #fafafa;
+    font-family: 'Consolas', 'Menlo', monospace;
+    line-height: 1.6;
+  }
+  .formula-box .k { color: #888; margin-right: 2mm; }
+
+  .card-foot {
+    padding: 2mm 4mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7.5pt;
+    color: #666;
+    background: #fafafa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4mm;
+  }
+
+  /* Footer */
+  .doc-foot {
+    margin-top: 6mm;
+    padding-top: 3mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7pt;
+    color: #888;
+    line-height: 1.6;
+  }
+  .doc-foot .src { font-family: 'Consolas', 'Menlo', monospace; color: #555; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="left">
+    <div class="label">P R E - L A B&nbsp;&nbsp;C H E C K L I S T</div>
+    <div class="title">{{WEEK}} 측정 체크리스트</div>
+  </div>
+  <div class="right">
+    <div class="course">기초전기실험</div>
+    <div>{{GENERATED_AT}}</div>
+  </div>
+</div>
+
+<div class="summary">
+  <h2>요약</h2>
+  <div class="stats">
+    <div class="stat"><div class="k">Tables</div><div class="v">{{COUNT_TABLES}}</div></div>
+    <div class="stat"><div class="k">측정 셀</div><div class="v">{{COUNT_MEASURE}}</div></div>
+    <div class="stat"><div class="k">계산 셀</div><div class="v">{{COUNT_COMPUTE}}</div></div>
+    <div class="stat"><div class="k">환산 셀</div><div class="v">{{COUNT_DERIVED}}</div></div>
+    <div class="stat"><div class="k">고정 셀</div><div class="v">{{COUNT_FIXED}}</div></div>
+    <div class="stat"><div class="k">사용 기기</div><div class="v" style="font-size:9pt;">{{TOOLS}}</div></div>
+  </div>
+  <div class="meta">우승 예비보고서: {{WINNER_PREREPORT}} · 캐시: {{CACHE_STATUS}}</div>
+</div>
+
+{{TABLE_CARDS}}
+
+<div class="doc-foot">
+  <div>사용한 소스:</div>
+  <div class="src">{{SOURCES_LIST}}</div>
+  <div style="margin-top:1mm;">생성: {{GENERATED_AT}} · 측정값 옆 예상값은 이론 계산값이며 ± 신뢰도 라벨(상/중/하)이 함께 표시됩니다.</div>
+</div>
+
+</body>
+</html>

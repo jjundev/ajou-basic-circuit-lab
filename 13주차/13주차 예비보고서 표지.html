@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>13주차 예비보고서 표지</title>
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #111;
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 20mm 22mm;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10mm;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .header .left .label {
+    font-size: 8pt;
+    letter-spacing: 0.45em;
+    color: #888;
+    margin-bottom: 4mm;
+  }
+  .header .left .title {
+    font-size: 26pt;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .header .right {
+    text-align: right;
+    font-size: 9pt;
+    color: #666;
+    line-height: 1.6;
+  }
+  .header .right .course { color: #111; font-weight: 500; }
+
+  /* Ethics section */
+  .ethics {
+    flex: 1;
+    padding-top: 9mm;
+  }
+  .ethics-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5mm;
+  }
+  .ethics-head .h-left {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .ethics-head h2 {
+    margin: 0;
+    font-size: 11.5pt;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .ethics-head .sub {
+    font-size: 8.5pt;
+    color: #888;
+  }
+  .ethics-head .src {
+    font-size: 8pt;
+    color: #999;
+  }
+  .intro {
+    font-size: 9pt;
+    line-height: 1.55;
+    color: #333;
+    margin: 0 0 4mm 0;
+  }
+  ol.codes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: code;
+  }
+  ol.codes li {
+    counter-increment: code;
+    position: relative;
+    padding-left: 7mm;
+    font-size: 9pt;
+    line-height: 1.5;
+    margin-bottom: 1.6mm;
+    color: #222;
+  }
+  ol.codes li::before {
+    content: counter(code) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 600;
+    color: #111;
+    width: 6mm;
+  }
+  ol.codes li b {
+    font-weight: 600;
+    color: #111;
+  }
+  ol.codes li .note {
+    color: #777;
+    font-size: 8.5pt;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 6mm;
+    padding-top: 6mm;
+    border-top: 1px solid #1a1a1a;
+  }
+  .pledge {
+    text-align: center;
+    font-size: 9.5pt;
+    color: #111;
+    margin-bottom: 6mm;
+    letter-spacing: -0.005em;
+  }
+  dl.info {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 22mm 1fr;
+    row-gap: 2.2mm;
+    column-gap: 6mm;
+    max-width: 130mm;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  dl.info dt {
+    font-size: 8.5pt;
+    color: #888;
+    letter-spacing: 0.05em;
+    align-self: center;
+  }
+  dl.info dd {
+    margin: 0;
+    font-size: 10pt;
+    color: #111;
+    align-self: center;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="left">
+      <div class="label">REPORT</div>
+      <div class="title">13주차 예비보고서</div>
+    </div>
+    <div class="right">
+      <div class="course">기초전기실험</div>
+      <div>C088-3 · 전자공학과</div>
+    </div>
+  </header>
+
+  <section class="ethics">
+    <div class="ethics-head">
+      <div class="h-left">
+        <h2>전자공학도의 윤리 강령</h2>
+        <span class="sub">IEEE Code of Ethics</span>
+      </div>
+      <span class="src">ieee.org</span>
+    </div>
+
+    <p class="intro">
+      나는 전자공학도로서, 전자공학이 전 세계 인류의 삶에 끼치는 심대한 영향을 인식하여 우리의 직업, 동료와 사회에 대한 나의 의무를 짐에 있어 최고의 윤리적, 전문적 행위를 수행할 것을 다짐하면서, 다음에 동의한다.
+    </p>
+
+    <ol class="codes">
+      <li><b>공중의 안전, 건강 복리에 대한 책임</b> &mdash; 공중의 안전, 건강, 복리에 부합하는 결정을 할 책임을 질 것이며, 공중 또는 환경을 위협할 수 있는 요인을 신속히 공개한다.</li>
+      <li><b>지위 남용 배제</b> &mdash; 실존하거나 예기되는 이해 상충을 가능한 한 피하며, 실제로 이해가 상충할 때에는 이를 이해 관련 당사자에게 알린다. <span class="note">(이해 상충: 공적인 지위를 사적 이익에 남용할 가능성)</span></li>
+      <li><b>정직성</b> &mdash; 청구 또는 견적을 함에 있어 입수 가능한 자료에 근거하여 정직하고 현실적으로 한다.</li>
+      <li><b>뇌물 수수 금지</b> &mdash; 어떠한 형태의 뇌물도 거절한다.</li>
+      <li><b>기술의 영향력 이해</b> &mdash; 기술과 기술의 적절한 응용 및 잠재적 영향에 대한 이해를 높인다.</li>
+      <li><b>자기계발 및 책무성</b> &mdash; 기술적 능력을 유지·증진하며, 훈련 또는 경험을 통하여 자격이 있는 경우이거나 관련 한계를 전부 밝힌 뒤에만 타인을 위한 기술 업무를 수행한다.</li>
+      <li><b>엔지니어로서의 자세</b> &mdash; 기술상의 업무에 대한 솔직한 비평을 구하고, 수용하고, 제공하며, 오류를 인정하고 수정하며, 타인의 기여를 적절히 인정한다.</li>
+      <li><b>차별 안하기</b> &mdash; 인종, 종교, 성별, 장애, 연령, 출신국 등의 요인에 관계없이 모든 사람을 공평하게 대한다.</li>
+      <li><b>도덕성</b> &mdash; 허위 또는 악의적인 행위로 타인, 타인의 재산, 명예, 또는 취업에 해를 끼치지 않는다.</li>
+      <li><b>동료애</b> &mdash; 동료와 협력자가 전문분야에서 발전하도록 도우며, 이 윤리 헌장을 준수하도록 지원한다.</li>
+    </ol>
+  </section>
+
+  <footer class="footer">
+    <p class="pledge">위 IEEE 윤리헌장 정신에 입각하여 report를 작성하였음을 서약합니다.</p>
+    <dl class="info">
+      <dt>학&nbsp;&nbsp;&nbsp;부</dt><dd>전자공학과</dd>
+      <dt>제 출 일</dt><dd>2026.05.23</dd>
+      <dt>과 목 명</dt><dd>기초전기실험</dd>
+      <dt>교 수 명</dt><dd>권혁준 교수님</dd>
+      <dt>분&nbsp;&nbsp;&nbsp;반</dt><dd>C088-3</dd>
+      <dt>학&nbsp;&nbsp;&nbsp;번</dt><dd>202128508, 202220953, 202320724</dd>
+      <dt>성&nbsp;&nbsp;&nbsp;명</dt><dd>최승민, 신현준, 염지성</dd>
+    </dl>
+  </footer>
+
+</div>
+</body>
+</html>
+

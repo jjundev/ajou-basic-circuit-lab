@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>14주차 실험 프리뷰</title>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' },
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+        MathJax.startup.promise.then(() => { window.__mathjaxDone = true; });
+      }
+    }
+  };
+</script>
+<script src="file:///C:/Users/Hyunjun/Desktop/%ED%98%84%EC%A4%80%EB%8C%80%ED%95%99/%EA%B8%B0%EC%A0%84%EC%8B%A4/.claude/skills/explain-lab-preview/mathjax/tex-svg.js" id="MathJax-script" async></script>
+<style>
+  @font-face {
+    font-family: 'Pretendard';
+    font-weight: 45 920;
+    font-style: normal;
+    font-display: block;
+    src: local('Pretendard Variable'), local('Pretendard'),
+         url('file:///C:/Users/Hyunjun/Desktop/%ED%98%84%EC%A4%80%EB%8C%80%ED%95%99/%EA%B8%B0%EC%A0%84%EC%8B%A4/.claude/skills/explain-lab-preview/fonts/PretendardVariable.woff2') format('woff2-variations');
+  }
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #fff; color: #111;
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 10.5pt; line-height: 1.65;
+  }
+
+  /* Header */
+  .doc-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding-bottom: 4mm; margin-bottom: 7mm;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .doc-header .label {
+    font-size: 7.5pt; letter-spacing: 0.45em; color: #888; margin-bottom: 2.5mm;
+  }
+  .doc-header .title { font-size: 20pt; font-weight: 300; line-height: 1.05; letter-spacing: -0.01em; }
+  .doc-header .meta { text-align: right; font-size: 8.5pt; color: #666; line-height: 1.5; }
+  .doc-header .meta .course { color: #111; font-weight: 500; }
+
+  /* Content */
+  .content h2 {
+    font-size: 13pt; font-weight: 600; margin: 9mm 0 3mm;
+    padding-bottom: 1.5mm; border-bottom: 1px solid #ddd;
+  }
+  .content h2:first-child { margin-top: 0; }
+  .content h3 { font-size: 11pt; font-weight: 600; margin: 6mm 0 2mm; color: #222; }
+  .content p { margin: 2.5mm 0; }
+  .content ul, .content ol { margin: 2.5mm 0; padding-left: 6mm; }
+  .content li { margin: 1mm 0; }
+  .content strong { font-weight: 600; }
+
+  /* Analogy / callout box */
+  .callout {
+    background: #f7f7f7; border-left: 3px solid #1a1a1a;
+    padding: 3mm 4mm; margin: 3mm 0; font-size: 10pt;
+  }
+  .summary {
+    border: 1px solid #1a1a1a; padding: 3.5mm 4mm; margin: 5mm 0 2mm;
+    font-weight: 500;
+  }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 3mm 0; font-size: 9.5pt; }
+  th, td { border: 1px solid #ccc; padding: 1.8mm 2.5mm; text-align: left; vertical-align: top; }
+  th { background: #f0f0f0; font-weight: 600; }
+
+  /* Math display spacing */
+  mjx-container[display="true"] { margin: 3mm 0 !important; }
+
+  /* Footer — repeats on every printed page in Chromium */
+  .doc-footer {
+    position: fixed; bottom: 6mm; left: 16mm; right: 16mm;
+    font-size: 7.5pt; color: #999; text-align: center;
+    border-top: 1px solid #eee; padding-top: 1.5mm;
+  }
+  .page-break { break-before: page; }
+</style>
+</head>
+<body>
+  <div class="doc-header">
+    <div class="left">
+      <div class="label">LAB PREVIEW</div>
+      <div class="title">14주차 실험 프리뷰</div>
+    </div>
+    <div class="meta">
+      <div class="course">기초전기실험</div>
+      <div>2026.06.02</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+<h2>[1] 큰 그림 — 이번엔 "직렬 공진 회로"</h2>
+
+<p>이번 주차 실험을 한 문장으로 요약하면 이렇습니다. R·L·C를 한 줄(<strong>직렬</strong>)로 연결해 놓고, 입력 사인파의 주파수를 500&nbsp;Hz에서 10&nbsp;kHz까지 천천히 바꿔가면서 — 어느 주파수에서 회로에 전류가 가장 잘 흐르는지(<strong>공진</strong>), 그 "잘 흐름"이 얼마나 날카로운지(<strong>Q</strong>)를 확인하는 실험입니다.</p>
+
+<div class="callout">
+<strong>그네 비유.</strong> 놀이터 그네를 떠올려 보세요. 아무 박자로나 밀면 잘 안 흔들리지만, 그네 고유의 리듬에 딱 맞춰 밀면 작은 힘으로도 크게 흔들립니다. 회로에도 이런 "고유 리듬"이 있어요. 그 리듬에 해당하는 주파수가 <strong>공진 주파수 $f_s$</strong>이고, 바로 거기서 전류가 최대로 출렁입니다. 그리고 그네가 마찰이 적어 잘·오래 흔들리는 정도가 회로의 <strong>Q(양호도)</strong>에 대응합니다.
+</div>
+
+<table>
+<thead><tr><th>그네 / 종 (비유)</th><th>직렬 RLC 회로 (실제)</th></tr></thead>
+<tbody>
+<tr><td>미는 박자</td><td>입력 사인파 주파수 $f$</td></tr>
+<tr><td>그네 고유의 리듬</td><td>공진 주파수 $f_s \approx 5{,}033$ Hz</td></tr>
+<tr><td>적은 힘으로 크게 흔들림</td><td>공진에서 전류 $I$ 최대 (임피던스 $Z$ 최소)</td></tr>
+<tr><td>마찰이 적어 잘 울림</td><td>$R$이 작아 $Q$가 큼</td></tr>
+<tr><td>잘 흔들리는 박자 범위</td><td>대역폭 $BW$</td></tr>
+</tbody>
+</table>
+
+<div class="summary">
+핵심: 주파수를 쭉 바꿔가며 "회로가 가장 잘 울리는 지점($f_s$)"을 찾고, 저항 $R$을 220&nbsp;&#937; → 33&nbsp;&#937;로 바꿔 그 울림이 얼마나 더 날카로워지는지 비교하는 것 — 이게 이번 실험의 전부입니다.
+</div>
+
+<h2>[2] 핵심 개념 빌드업</h2>
+
+<h3>개념 1 — 공진: $X_L$과 $X_C$가 서로를 잡아먹는 순간</h3>
+
+<p><strong>① 왜 필요한가.</strong> 인덕터(L)와 커패시터(C)는 보통 저항처럼 "값이 고정"이 아닙니다. 주파수에 따라 전류를 막는 정도(리액턴스)가 달라져요.</p>
+<ul>
+<li>인덕터: $X_L = \omega L$ — 주파수가 올라갈수록 더 많이 막음 (관성 바퀴처럼, 빠른 변화를 싫어함).</li>
+<li>커패시터: $X_C = \dfrac{1}{\omega C}$ — 주파수가 올라갈수록 덜 막음 (물탱크처럼, 빠른 출렁임은 잘 통과).</li>
+</ul>
+
+<p><strong>② 단순 해법은 왜 안 통하나.</strong> "그럼 두 막음을 그냥 더하면 되지 않나?" 안 됩니다. 인덕터 전압과 커패시터 전압은 위상이 정확히 $180^\circ$ 반대라서, 산술합이 아니라 <strong>빼야</strong> 합니다: $X = X_L - X_C$.</p>
+
+<p><strong>③ 핵심 통찰 (Aha).</strong> 주파수를 올리면 $X_L$은 커지고 $X_C$는 작아집니다. 그러면 어느 한 주파수에서 <strong>둘이 정확히 같아지는 순간</strong>이 옵니다. 그 순간 $X_L - X_C = 0$이 되어, 회로에는 마치 $R$만 남은 것처럼 됩니다.</p>
+
+<p><strong>④ 왜 작동하나.</strong> 직렬 RLC의 임피던스는</p>
+$$Z_T = R + j(X_L - X_C) = R + jX$$
+<p>공진에서 허수부 $X = 0$ → $Z_T = R$ (최소값) → $I = \dfrac{E}{R}$ (최대값). 입력 전압과 전류가 동상이 됩니다.</p>
+
+<p><strong>⑤ 구체적 예시 (이번 실험 값).</strong> $L = 10$ mH, $C = 0.1\ \mu$F 이므로</p>
+$$f_s = \frac{1}{2\pi\sqrt{LC}} = \frac{1}{2\pi\sqrt{10^{-2}\times 10^{-7}}} \approx 5{,}033\ \text{Hz}$$
+<p>이 점에서 $X_L = \omega_s L \approx 316.23\ \Omega$, $X_C = \dfrac{1}{\omega_s C} \approx 316.23\ \Omega$ 로 정확히 상쇄됩니다.</p>
+
+<div class="callout">
+<strong>정밀 디테일 (헷갈리기 쉬운 곳).</strong> "공진점에서 모든 게 최대"가 <em>아닙니다</em>. 정확히는 — 전류 $I$(= $V_R$)가 최대인 점만 딱 $f_s$입니다. $V_C$의 피크는 $f_s$보다 <em>약간 낮은</em> 쪽(약 4,500&nbsp;Hz), $V_L$의 피크는 $f_s$보다 <em>약간 높은</em> 쪽(약 5,500&nbsp;Hz)에서 나타납니다. 예비보고서 Table 13.2를 보면 $V_C$가 4,000&nbsp;Hz에서 6.02&nbsp;V로 이미 공진점(5.75&nbsp;V)보다 높은 걸 확인할 수 있어요.
+</div>
+
+<h3>개념 2 — Q(양호도): 울림이 얼마나 날카로운가</h3>
+
+<p><strong>① 동기.</strong> 공진이 일어난다는 것까진 알았는데, "얼마나 뾰족하게" 일어나는지가 회로의 진짜 성능(특정 주파수만 골라내는 선택도)을 결정합니다.</p>
+
+<p><strong>② 핵심 통찰.</strong> 양호도는</p>
+$$Q = \frac{\omega_s L}{R} = \frac{1}{\omega_s C R} = \frac{1}{R}\sqrt{\frac{L}{C}}$$
+<p>$L, C$가 고정이면 $\sqrt{L/C} \approx 316.23\ \Omega$로 상수이므로, <strong>오직 $R$만이 $Q$를 좌우</strong>합니다 — $R$이 작을수록 $Q$가 큽니다.</p>
+
+<p><strong>③ 예시.</strong></p>
+<ul>
+<li>Part 1 ($R = 220\ \Omega$): $Q_1 = 316.23 / 220 \approx 1.437$</li>
+<li>Part 2 ($R = 33\ \Omega$): $Q_2 = 316.23 / 33 \approx 9.583$ — 약 6.67배 커짐</li>
+</ul>
+
+<p><strong>④ 놀라운 결과 — 전압 확대.</strong> 공진에서 $V_C = V_L = Q \cdot E_S$ 입니다. Part 2에서 입력이 겨우 $4$ V인데도</p>
+$$V_C(f_s) = Q_2 \cdot E_S \approx 9.583 \times 4 \approx 38.3\ \text{V}_{p\text{-}p}$$
+<p>입력의 약 9.58배까지 전압이 부풀어 오릅니다.</p>
+
+<div class="callout">
+<strong>정밀 디테일.</strong> $Q$는 막연한 "성능 점수"가 아니라 정확한 관계식들로 묶여 있습니다. 공진에서 $Q = \dfrac{V_L}{V_R} = \dfrac{V_C}{V_R}$ (전압 확대비)이고, 동시에 $BW = \dfrac{f_s}{Q}$ (대역폭과 직결)입니다. 즉 $Q$ 하나가 "전압이 몇 배 부푸는가"와 "얼마나 좁은 주파수만 통과하는가"를 동시에 결정합니다.
+</div>
+
+<h2>[3] 실험 구조 — 각 Table이 무엇을 확인하나</h2>
+
+<p>예비보고서의 Table 순서대로, 각 단계가 "무엇을 검증하려는가"를 짚어보겠습니다.</p>
+
+<table>
+<thead><tr><th>Table</th><th>이 단계가 확인하려는 것</th></tr></thead>
+<tbody>
+<tr><td><strong>13.1</strong> (Part 1 공진주파수)</td><td>실험 전에 이론값 $f_s \approx 5{,}033$ Hz를 못 박는 단계. 나중에 실측 $V_R$ 피크 위치와 비교할 기준점.</td></tr>
+<tr><td><strong>13.2</strong> (Part 1, Low-Q 220&#937;)</td><td>11개 주파수 + $f_s$, $1.1f_s$, $0.9f_s$에서 $V_C, V_L, V_R, I, Z_i$를 모두 기록 → 공진 곡선의 "전체 모양"을 얻는 메인 데이터.</td></tr>
+<tr><td><strong>13.5</strong> (Part 1(m) 동상 주파수)</td><td>$E$와 $V_R$이 동상(위상차 0)이 되는 주파수를 찾아, 위상 관점에서 공진을 한 번 더 확인. $V_R \propto I$이므로 동상 = 순저항 = 공진점.</td></tr>
+<tr><td><strong>13.6</strong> (Part 2 셋업 33&#937;)</td><td>$R$만 33&#937;로 교체. $L, C$를 안 바꿨으니 $f_s$가 그대로임을 확인하는 단계.</td></tr>
+<tr><td><strong>13.7</strong> (Part 2, High-Q 33&#937;)</td><td>13.2와 똑같은 측정을, 이번엔 훨씬 좁고 깊은 공진 곡선으로. Part 1과의 직접 비교용.</td></tr>
+<tr><td><strong>13.8</strong> (Part 2(c) 새 최대전류)</td><td>$R$을 줄인 결과 $I_{max} \approx 121$ mA로 Part 1(18.18 mA)의 약 6.67배가 됨을 확인.</td></tr>
+</tbody>
+</table>
+
+<h2>[4] Part 1 vs Part 2 — 통제 실험 프레임</h2>
+
+<p>이 실험의 설계는 전형적인 <strong>통제 실험</strong>입니다. 단 하나의 변수($R$)만 바꾸고 나머지는 전부 고정해서, $Q$의 효과를 깔끔하게 격리해 관찰합니다.</p>
+
+<table>
+<thead><tr><th>고정 변수 (통제)</th><th>독립 변수 (내가 바꾼 것)</th><th>종속 변수 (따라 바뀐 것)</th></tr></thead>
+<tbody>
+<tr>
+<td>$L = 10$ mH<br>$C = 0.1\ \mu$F<br>$E_S = 4\ \text{V}_{p\text{-}p}$<br>$f_s \approx 5{,}033$ Hz</td>
+<td>$R:\ 220\ \Omega \rightarrow 33\ \Omega$</td>
+<td>$Q:\ 1.437 \rightarrow 9.583$ (×6.67)<br>$BW:\ 3{,}502 \rightarrow 525$ Hz (÷6.67)<br>$I_{max}:\ 18.18 \rightarrow 121.2$ mA (×6.67)<br>$V_C(f_s):\ 5.75 \rightarrow 38.3$ V (×6.67)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>가장 중요한 통제 포인트:</strong> $R$을 바꿔도 $f_s$는 변하지 않습니다. 공진 주파수는 $L, C$만으로 정해지기 때문이에요($f_s = 1/2\pi\sqrt{LC}$). 그래서 "위치는 그대로 둔 채 날카로움만 비교"가 가능합니다.</p>
+
+<div class="summary">
+한 문장 일반화: $R$을 줄이면 → $Q$가 커지고 → 공진 곡선이 날카로워지고($BW$ 좁아짐), 전압 확대($V_C, V_L$)와 최대 전류가 모두 같은 비율(6.67배)로 커진다. 단, 공진 위치 $f_s$는 그대로. 묶는 식은 $BW \cdot Q = f_s$ (일정).
+</div>
+
+<h2>[5] 그래프 그리는 법 (Graph 13.1)</h2>
+
+<p>이 실험의 핵심 산출물은 <strong>$Z_i$ vs 주파수 $f$</strong> 곡선입니다.</p>
+<ul>
+<li><strong>축:</strong> 가로축 = 주파수 $f$ (Hz), 세로축 = 입력 임피던스 $Z_i$ (&#937;). 주파수 범위가 넓으니 가로축은 로그 스케일도 고려해볼 만합니다.</li>
+<li><strong>점 찍기:</strong> Table 13.2의 $Z_i$ 열 값을 그대로 점으로 찍고 부드러운 곡선으로 연결합니다.</li>
+<li><strong>모양:</strong> 비대칭 U자(골짜기) — 최저점이 $f_s \approx 5{,}033$ Hz에서 $Z_i = 220\ \Omega$ (= $R$)입니다. 저주파 쪽은 $X_C$가 우세해 가파르게 올라가고, 고주파 쪽은 $X_L$이 우세해 올라갑니다.</li>
+<li><strong>두 곡선 겹쳐 그리기:</strong> 같은 평면에 Part 2(33&#937;) 곡선을 겹치면, 공진점에서 33&#937;까지 훨씬 더 깊고 좁게 급강하하는 골짜기가 보입니다 → $Q$가 커지면 선택도가 좋아짐을 한눈에 비교.</li>
+<li><strong>팁:</strong> 공진점 부근을 촘촘히 본 $0.9f_s$(4,530 Hz)·$1.1f_s$(5,536 Hz) 데이터가 곡선의 골짜기 모양을 정확히 잡는 데 결정적입니다. 빠뜨리지 마세요.</li>
+</ul>
+
+<p>곁들여, $V_R$(또는 $I$) vs $f$ 곡선을 그리면 $Z_i$의 U자를 뒤집은 <strong>피크형 공진 곡선</strong>이 나옵니다. 이 곡선의 $0.707 \times I_{max}$ 높이에서 좌우 두 교점 사이 폭을 재면 그게 바로 대역폭 $BW$입니다 (Part 1 ≈ 3,502 Hz, Part 2 ≈ 525 Hz).</p>
+
+<div class="summary">
+이번 프리뷰는 [1] 큰 그림 → [2] 공진·Q 개념 → [3] Table별 목적 → [4] Part 비교(통제 실험) → [5] 그래프까지 전 항목을 다뤘습니다. 실험실에서 막히는 부분이 있으면 그 자리에서 "이 Table 다시", "이 수치 어디서 나왔어?"처럼 콕 집어 물어보세요.
+</div>
+
+  </div>
+
+  <div class="doc-footer">학습용 프리뷰 — 보고서 제출용 아님</div>
+</body>
+</html>

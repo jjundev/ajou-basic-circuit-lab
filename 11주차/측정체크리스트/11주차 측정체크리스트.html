@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>11주차 측정 체크리스트</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 12mm 12mm 14mm 12mm;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #111;
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 5mm;
+    border-bottom: 1px solid #1a1a1a;
+    margin-bottom: 6mm;
+  }
+  .header .left .label {
+    font-size: 7.5pt;
+    letter-spacing: 0.45em;
+    color: #888;
+    margin-bottom: 2mm;
+  }
+  .header .left .title {
+    font-size: 18pt;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .header .right {
+    text-align: right;
+    font-size: 8pt;
+    color: #666;
+    line-height: 1.6;
+  }
+  .header .right .course { color: #111; font-weight: 500; }
+
+  /* Summary box */
+  .summary {
+    border: 1px solid #d0d0d0;
+    padding: 4mm 5mm;
+    margin-bottom: 6mm;
+    font-size: 8.5pt;
+    color: #333;
+    background: #fafafa;
+  }
+  .summary h2 {
+    margin: 0 0 2mm 0;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #111;
+  }
+  .summary .stats {
+    display: flex;
+    gap: 6mm;
+    flex-wrap: wrap;
+  }
+  .summary .stat .k {
+    color: #888;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .summary .stat .v {
+    color: #111;
+    font-size: 11pt;
+    font-weight: 500;
+  }
+  .summary .meta {
+    margin-top: 3mm;
+    font-size: 7.5pt;
+    color: #666;
+  }
+
+  /* Table cards — atomic 단위는 카드 전체가 아닌 tr (행). 헤더 묶음은 다음 형제와 결합 유지. */
+  .card {
+    break-inside: auto;
+    page-break-inside: auto;
+    border: 1px solid #1a1a1a;
+    margin-bottom: 0;
+  }
+  .card + .card {
+    margin-top: 5mm;
+  }
+  .card-head {
+    padding: 3mm 4mm;
+    background: #1a1a1a;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-head .title {
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  .card-head .model {
+    font-size: 8pt;
+    color: #d8d8d8;
+    font-weight: 300;
+  }
+  .card-meta {
+    padding: 2.5mm 4mm;
+    border-bottom: 1px solid #d0d0d0;
+    font-size: 8pt;
+    color: #444;
+    background: #fafafa;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-meta .row { display: flex; gap: 4mm; }
+  .card-meta .k {
+    color: #888;
+    min-width: 18mm;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 7pt;
+    padding-top: 0.5mm;
+  }
+  .card-meta .v { color: #111; flex: 1; }
+
+  /* Data table */
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+  table.data thead {
+    display: table-header-group;  /* 페이지 넘김 시 헤더 행 자동 반복 */
+  }
+  table.data tbody tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  table.data th, table.data td {
+    border: 1px solid #d0d0d0;
+    padding: 2.5mm 2mm;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.35;
+  }
+  table.data thead th {
+    background: #f0f0f0;
+    color: #111;
+    font-weight: 600;
+    font-size: 8pt;
+    padding: 2.5mm 2mm 2mm 2mm;
+  }
+  table.data thead th .unit {
+    display: block;
+    font-size: 7pt;
+    color: #777;
+    font-weight: 400;
+    margin-top: 0.5mm;
+  }
+
+  /* Cell kinds */
+  .badge {
+    display: inline-block;
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.6mm 1.5mm;
+    border-radius: 1mm;
+    vertical-align: middle;
+    line-height: 1;
+  }
+  .badge-measure { background: #111; color: #fff; }
+  .badge-compute { background: #d8d8d8; color: #444; }
+  .badge-derived { background: #5a7a9a; color: #fff; }
+  .badge-fixed   { background: #ffeaa7; color: #6a4f00; }
+
+  td.cell-independent {
+    background: #f6f6f6;
+    color: #444;
+    font-weight: 500;
+  }
+  /* independent cell that is also DMM-measured (v3: kind: independent | measured: true).
+     Reuses badge-measure styling but keeps the gray independent background so it remains visually
+     anchored as a row key. */
+  td.cell-independent.measured-hint {
+    background: #f6f6f6;
+    text-align: left;
+    padding: 2mm;
+  }
+  td.cell-independent.measured-hint .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #888;
+    margin-bottom: 1mm;
+  }
+  td.cell-independent.measured-hint .nominal {
+    color: #111;
+    font-weight: 600;
+    font-size: 8.5pt;
+  }
+  td.cell-independent.measured-hint .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-independent.measured-hint .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-measure {
+    background: #fff;
+    text-align: left;
+    padding: 2mm;
+  }
+  td.cell-measure .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #888;
+    margin-bottom: 1mm;
+  }
+  td.cell-measure .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-measure .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  td.cell-measure .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-measure .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  td.cell-compute {
+    background: #f4f4f4;
+    text-align: left;
+    padding: 2mm;
+    color: #333;
+  }
+  td.cell-compute .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #777;
+    margin-bottom: 1mm;
+  }
+  td.cell-compute .formula {
+    font-family: 'Consolas', 'Menlo', monospace;
+    font-size: 7.5pt;
+    color: #222;
+  }
+  /* derived (v4): 측정값으로부터 환산해 채우는 셀. measured(흰)·computed(짙회)의 중간 톤 +
+     좌측 4px 회청 보더로 흑백 인쇄에서도 식별 단서 잔존. */
+  td.cell-derived {
+    background: #eef4fa;
+    border-left: 4px solid #5a7a9a;
+    text-align: left;
+    padding: 2mm;
+    color: #333;
+  }
+  td.cell-derived .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #5a7a9a;
+    margin-bottom: 1mm;
+  }
+  td.cell-derived .formula {
+    font-family: 'Consolas', 'Menlo', monospace;
+    font-size: 7.5pt;
+    color: #222;
+  }
+  td.cell-derived .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-derived .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  td.cell-derived .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-derived .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  td.cell-fixed {
+    background: #fff9e6;
+    color: #6a4f00;
+    font-weight: 500;
+  }
+  td.cell-fixed .top {
+    font-size: 7pt;
+    color: #a07a00;
+    margin-bottom: 0.5mm;
+  }
+
+  /* Formula box for long formulas */
+  .formula-box {
+    padding: 2.5mm 4mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7.5pt;
+    color: #333;
+    background: #fafafa;
+    font-family: 'Consolas', 'Menlo', monospace;
+    line-height: 1.6;
+  }
+  .formula-box .k { color: #888; margin-right: 2mm; }
+
+  .card-foot {
+    padding: 2mm 4mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7.5pt;
+    color: #666;
+    background: #fafafa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4mm;
+  }
+
+  /* Footer */
+  .doc-foot {
+    margin-top: 6mm;
+    padding-top: 3mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7pt;
+    color: #888;
+    line-height: 1.6;
+  }
+  .doc-foot .src { font-family: 'Consolas', 'Menlo', monospace; color: #555; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="left">
+    <div class="label">P R E - L A B&nbsp;&nbsp;C H E C K L I S T</div>
+    <div class="title">11주차 측정 체크리스트</div>
+  </div>
+  <div class="right">
+    <div class="course">기초전기실험</div>
+    <div>2026-05-20 00:58</div>
+  </div>
+</div>
+
+<div class="summary">
+  <h2>요약</h2>
+  <div class="stats">
+    <div class="stat"><div class="k">Tables</div><div class="v">14</div></div>
+    <div class="stat"><div class="k">측정 셀</div><div class="v">60</div></div>
+    <div class="stat"><div class="k">계산 셀</div><div class="v">32</div></div>
+    <div class="stat"><div class="k">환산 셀</div><div class="v">15</div></div>
+    <div class="stat"><div class="k">고정 셀</div><div class="v">6</div></div>
+    <div class="stat"><div class="k">사용 기기</div><div class="v" style="font-size:9pt;">DMM (저항 모드) · Oscilloscope Ch2 (p-p) · D_1, D_2 환산 · Oscilloscope (한 주기 폭) · Oscilloscope (위상차 폭) · Oscilloscope dual-trace · Oscilloscope (X-Y, x=0 시점 y절편) · Oscilloscope (X-Y, vertical peak) · y_o, y_m 환산 · Oscilloscope Ch2 (p-p; R 또는 L swap 후) · Oscilloscope Ch2 (p-p; R 또는 C swap 후) · Oscilloscope (V_R/V_L/V_C/V_ab 직접; I, Z_T 도출) · Oscilloscope (V_Rs/V_R 직접 → I 환산) · I_R, I_L 페이저 합 · V_Rs(for I_s)/R_s 환산 · 페이저 다이어그램 (E ↔ I_s 각) · 페이저 다이어그램 (I_s ↔ I_L 각)</div></div>
+  </div>
+  <div class="meta">우승 예비보고서: 11주차 예비보고서(수정본).md · 캐시: v4 신선</div>
+</div>
+
+<div class="card"><div class="card-head"><div class="title">AC 0 · Resistor Measurements · Table R.0</div><div class="model">결선 전 DMM 저항 모드로 모든 저항 실측 (AC 7/8/9 공통 입력값)</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">DMM 모드 = 저항 (Ω) · 회로 전원 차단 후 단자 분리 상태에서 측정</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">항목 = [R = 1 kΩ, R = 3.3 kΩ, R = 6.8 kΩ, R_s = 10 Ω]</span></div></div><table class="data"><thead><tr><th>항목</th><th>Measured<span class="unit">Ω</span></th></tr></thead><tbody><tr><td class="cell-independent">R = 1 kΩ</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>DMM (저항 모드)</span></div><div class="expected">예상 <span class="v">1000</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">R = 3.3 kΩ</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>DMM (저항 모드)</span></div><div class="expected">예상 <span class="v">3300</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">R = 6.8 kΩ</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>DMM (저항 모드)</span></div><div class="expected">예상 <span class="v">6800</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">R_s = 10 Ω</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>DMM (저항 모드)</span></div><div class="expected">예상 <span class="v">10</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 4</span><span>계산 0</span><span>환산 0</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 7 · Part 1 · Table 7.1</div><div class="model">R(1kΩ)–C(0.47μF) 직렬, Es=4 Vpp @ 200 Hz (FIG 7.9). Ch1=E, Ch2=V_R.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal; 강의노트 4 Vpp override) · f = 200 Hz (nominal) · C = 0.47 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 1 ms/div</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>R<span class="unit">Ω</span></th><th>X_C<span class="unit">Ω</span></th><th>E(p-p)<span class="unit">V</span></th><th>V_R(p-p) Calc<span class="unit">V</span></th><th>V_R(p-p) Meas<span class="unit">V</span></th><th>θ_1 Calc<span class="unit">°</span></th><th>θ_1 Meas<span class="unit">°</span></th><th>D_1<span class="unit">div</span></th><th>D_2<span class="unit">div</span></th></tr></thead><tbody><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">—</div><div class="expected">예상 <span style="font-weight:600;color:#111;">1 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2πfC) ≈ 1693.30</div></td><td class="cell-fixed"><div class="top">고정</div>4</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E·R/√(R²+X_C²) ≈ 2.03</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p)</span></div><div class="expected">예상 <span class="v">2.03</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">tan⁻¹(X_C/R) ≈ +59.43</div></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">(D_2/D_1)·360°</div><div class="expected">예상 <span class="v">59.43</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">0.826</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 4</span><span>계산 3</span><span>환산 1</span><span>고정 1</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 7 · Part 1 · Table 7.2</div><div class="model">R(3.3kΩ)–C(0.47μF) 직렬, Es=4 Vpp @ 200 Hz (Table 7.1과 동일 회로, R 교체)</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 200 Hz (nominal) · C = 0.47 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 1 ms/div</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>R<span class="unit">Ω</span></th><th>X_C<span class="unit">Ω</span></th><th>E(p-p)<span class="unit">V</span></th><th>V_R(p-p) Calc<span class="unit">V</span></th><th>V_R(p-p) Meas<span class="unit">V</span></th><th>θ_1 Calc<span class="unit">°</span></th><th>θ_1 Meas<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">—</div><div class="expected">예상 <span style="font-weight:600;color:#111;">3.3 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2πfC) ≈ 1693.30</div></td><td class="cell-fixed"><div class="top">고정</div>4</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E·R/√(R²+X_C²) ≈ 3.56</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p)</span></div><div class="expected">예상 <span class="v">3.56</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">tan⁻¹(X_C/R) ≈ +27.16</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope dual-trace</span></div><div class="expected">예상 <span class="v">27.16</span><span class="conf">[중]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 3</span><span>계산 3</span><span>환산 0</span><span>고정 1</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 7 · Part 1 · Table 7.3</div><div class="model">R(6.8kΩ)–C(0.47μF) 직렬, Es=4 Vpp @ 200 Hz (Table 7.1과 동일 회로, R 교체)</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 200 Hz (nominal) · C = 0.47 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 1 ms/div</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>R<span class="unit">Ω</span></th><th>X_C<span class="unit">Ω</span></th><th>E(p-p)<span class="unit">V</span></th><th>V_R(p-p) Calc<span class="unit">V</span></th><th>V_R(p-p) Meas<span class="unit">V</span></th><th>θ_1 Calc<span class="unit">°</span></th><th>θ_1 Meas<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">—</div><div class="expected">예상 <span style="font-weight:600;color:#111;">6.8 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2πfC) ≈ 1693.30</div></td><td class="cell-fixed"><div class="top">고정</div>4</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E·R/√(R²+X_C²) ≈ 3.88</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p)</span></div><div class="expected">예상 <span class="v">3.88</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">tan⁻¹(X_C/R) ≈ +13.99</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope dual-trace</span></div><div class="expected">예상 <span class="v">13.99</span><span class="conf">[중]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 3</span><span>계산 3</span><span>환산 0</span><span>고정 1</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 7 · Part 2 · Table 7.4</div><div class="model">R(1kΩ)–C(0.47μF) 직렬, R/C 위치 swap (FIG 7.11). Ch1=E, Ch2=V_C.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 200 Hz (nominal) · C = 0.47 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 1 ms/div</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>R<span class="unit">Ω</span></th><th>X_C<span class="unit">Ω</span></th><th>E(p-p)<span class="unit">V</span></th><th>V_C(p-p) Calc<span class="unit">V</span></th><th>V_C(p-p) Meas<span class="unit">V</span></th><th>θ_2 Calc<span class="unit">°</span></th><th>θ_2 Meas<span class="unit">°</span></th><th>D_1<span class="unit">div</span></th><th>D_2<span class="unit">div</span></th></tr></thead><tbody><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">—</div><div class="expected">예상 <span style="font-weight:600;color:#111;">1 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2πfC) ≈ 1693.30</div></td><td class="cell-fixed"><div class="top">고정</div>4</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E·X_C/√(R²+X_C²) ≈ 3.44</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p)</span></div><div class="expected">예상 <span class="v">3.44</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">−tan⁻¹(R/X_C) ≈ −30.57</div></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">−(D_2/D_1)·360°</div><div class="expected">예상 <span class="v">-30.57</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">0.425</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 4</span><span>계산 3</span><span>환산 1</span><span>고정 1</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 7 · Part 2 · Table 7.5</div><div class="model">R(3.3kΩ)–C(0.47μF) 직렬, R/C 위치 swap (Table 7.4와 동일 회로, R 교체)</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 200 Hz (nominal) · C = 0.47 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 1 ms/div</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>R<span class="unit">Ω</span></th><th>X_C<span class="unit">Ω</span></th><th>E(p-p)<span class="unit">V</span></th><th>V_C(p-p) Calc<span class="unit">V</span></th><th>V_C(p-p) Meas<span class="unit">V</span></th><th>θ_2 Calc<span class="unit">°</span></th><th>θ_2 Meas<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">—</div><div class="expected">예상 <span style="font-weight:600;color:#111;">3.3 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2πfC) ≈ 1693.30</div></td><td class="cell-fixed"><div class="top">고정</div>4</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E·X_C/√(R²+X_C²) ≈ 1.83</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p)</span></div><div class="expected">예상 <span class="v">1.83</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">−tan⁻¹(R/X_C) ≈ −62.84</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope dual-trace</span></div><div class="expected">예상 <span class="v">-62.84</span><span class="conf">[중]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 3</span><span>계산 3</span><span>환산 0</span><span>고정 1</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 7 · Part 2 · Table 7.6</div><div class="model">R(6.8kΩ)–C(0.47μF) 직렬, R/C 위치 swap (Table 7.4와 동일 회로, R 교체)</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 200 Hz (nominal) · C = 0.47 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 1 ms/div</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>R<span class="unit">Ω</span></th><th>X_C<span class="unit">Ω</span></th><th>E(p-p)<span class="unit">V</span></th><th>V_C(p-p) Calc<span class="unit">V</span></th><th>V_C(p-p) Meas<span class="unit">V</span></th><th>θ_2 Calc<span class="unit">°</span></th><th>θ_2 Meas<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">—</div><div class="expected">예상 <span style="font-weight:600;color:#111;">6.8 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2πfC) ≈ 1693.30</div></td><td class="cell-fixed"><div class="top">고정</div>4</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E·X_C/√(R²+X_C²) ≈ 0.97</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p)</span></div><div class="expected">예상 <span class="v">0.97</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">−tan⁻¹(R/X_C) ≈ −76.01</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope dual-trace</span></div><div class="expected">예상 <span class="v">-76.01</span><span class="conf">[중]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 3</span><span>계산 3</span><span>환산 0</span><span>고정 1</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 7 · Part 3 · Table 7.8</div><div class="model">R–C 직렬을 X-Y(Lissajous) 모드로 측정. Ch1(vert)=E, X(horiz)=V_R (FIG 7.12). 수직감도 1 V/div.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 200 Hz (nominal) · C = 0.47 μF (nominal) · y_m (vertical max) = E_peak / 1 V/div = 2.00 div (모든 R 케이스 공통)</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">R = [1 kΩ, 3.3 kΩ, 6.8 kΩ]</span></div></div><table class="data"><thead><tr><th>R<span class="unit">Ω</span></th><th>y_o<span class="unit">div</span></th><th>y_m<span class="unit">div</span></th><th>θ_1<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">1 kΩ</div><div class="expected">예상 <span style="font-weight:600;color:#111;">1 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (X-Y, x=0 시점 y절편)</span></div><div class="expected">예상 <span class="v">1.72</span><span class="conf">[중]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (X-Y, vertical peak)</span></div><div class="expected">예상 <span class="v">2.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>y_o, y_m 환산</span></div><div class="formula">sin⁻¹(y_o/y_m)</div><div class="expected">예상 <span class="v">59.43</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">3.3 kΩ</div><div class="expected">예상 <span style="font-weight:600;color:#111;">3.3 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (X-Y, x=0 시점 y절편)</span></div><div class="expected">예상 <span class="v">0.913</span><span class="conf">[중]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (X-Y, vertical peak)</span></div><div class="expected">예상 <span class="v">2.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>y_o, y_m 환산</span></div><div class="formula">sin⁻¹(y_o/y_m)</div><div class="expected">예상 <span class="v">27.16</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent measured-hint"><div class="top"><span class="badge badge-measure">측정</span><span>DMM</span></div><div class="nominal">6.8 kΩ</div><div class="expected">예상 <span style="font-weight:600;color:#111;">6.8 kΩ</span><span class="conf">[상]</span></div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (X-Y, x=0 시점 y절편)</span></div><div class="expected">예상 <span class="v">0.483</span><span class="conf">[중]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (X-Y, vertical peak)</span></div><div class="expected">예상 <span class="v">2.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>y_o, y_m 환산</span></div><div class="formula">sin⁻¹(y_o/y_m)</div><div class="expected">예상 <span class="v">13.99</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 9</span><span>계산 0</span><span>환산 3</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 8 · Part 1 · Table 8.1</div><div class="model">R(1kΩ)–L(10mH) 직렬 (FIG 8.1), Es=4 Vpp @ 10 kHz, R_l ≈ 0 가정. (h) R, L 위치 swap 후 V_L 측정.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 10 kHz (nominal) · L = 10 mH (nominal, R_l ≈ 0) · 수직감도 = 1 V/div, 수평감도 = 20 μs/div · X_L = 2πfL ≈ 628.32 Ω, Z ≈ 1180.86 Ω, I ≈ 3.388 mA</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">항목 = [R and θ_1, L and θ_2]</span></div></div><table class="data"><thead><tr><th>항목</th><th>V_R/V_L(p-p)<span class="unit">V</span></th><th>D_1<span class="unit">div</span></th><th>D_2<span class="unit">div</span></th><th>θ Meas<span class="unit">°</span></th><th>θ Calc<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent">R and θ_1</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p; R 또는 L swap 후)</span></div><div class="expected">예상 <span class="v">3.39</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">0.446</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">(D_2/D_1)·360°</div><div class="expected">예상 <span class="v">32.14</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">tan⁻¹(X_L/R) ≈ 32.14°</div></td></tr><tr><td class="cell-independent">L and θ_2</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p; R 또는 L swap 후)</span></div><div class="expected">예상 <span class="v">2.13</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">0.804</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">(D_2/D_1)·360°</div><div class="expected">예상 <span class="v">57.86</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">90° − tan⁻¹(X_L/R) ≈ 57.86°</div></td></tr></tbody></table><div class="card-foot"><span>측정 6</span><span>계산 2</span><span>환산 2</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 8 · Part 2 · Table 8.3</div><div class="model">R(1kΩ)–C(0.01μF) 직렬 (FIG 8.2), Es=4 Vpp @ 10 kHz. (h) R, C 위치 swap 후 V_C 측정.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 10 kHz (nominal) · C = 0.01 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 20 μs/div · X_C = 1/(2πfC) ≈ 1591.55 Ω, Z ≈ 1879.66 Ω, I ≈ 2.128 mA</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">항목 = [R and θ_1, C and θ_2]</span></div></div><table class="data"><thead><tr><th>항목</th><th>V_R/V_C(p-p)<span class="unit">V</span></th><th>D_1<span class="unit">div</span></th><th>D_2<span class="unit">div</span></th><th>θ Meas<span class="unit">°</span></th><th>θ Calc<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent">R and θ_1</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p; R 또는 C swap 후)</span></div><div class="expected">예상 <span class="v">2.13</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">0.804</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">±(D_2/D_1)·360° (부호: V_R lead +, V_C lag −)</div><div class="expected">예상 <span class="v">57.86</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">+tan⁻¹(X_C/R) ≈ +57.86°</div></td></tr><tr><td class="cell-independent">C and θ_2</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope Ch2 (p-p; R 또는 C swap 후)</span></div><div class="expected">예상 <span class="v">3.39</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">0.446</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">±(D_2/D_1)·360° (부호: V_R lead +, V_C lag −)</div><div class="expected">예상 <span class="v">-32.14</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">−(90° − tan⁻¹(X_C/R)) ≈ −32.14°</div></td></tr></tbody></table><div class="card-foot"><span>측정 6</span><span>계산 2</span><span>환산 2</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 8 · Part 3 · Table 8.5</div><div class="model">R(1kΩ)–L(10mH)–C(0.01μF) 직렬 (FIG 8.3), Es=4 Vpp @ 10 kHz. V_ab = 노드 a(R과 L 사이)와 GND 사이 = L+C 직렬 양단.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 10 kHz (nominal) · L = 10 mH (nominal, R_l ≈ 0) · C = 0.01 μF (nominal) · 수직감도 = 1 V/div, 수평감도 = 20 μs/div · X_L ≈ 628.32 Ω, X_C ≈ 1591.55 Ω, X_T = X_L − X_C ≈ −963.23 Ω, Z ≈ 1388.50 Ω, I ≈ 2.881 mA</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">항목 = [V_R(p-p), V_L(p-p), V_C(p-p), I(p-p), Z_T, V_ab(p-p)]</span></div></div><table class="data"><thead><tr><th>항목</th><th>Measured</th><th>Calculated</th></tr></thead><tbody><tr><td class="cell-independent">V_R(p-p)</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_R/V_L/V_C/V_ab 직접; I, Z_T 도출)</span></div><div class="expected">예상 <span class="v">2.88 V</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">I·R ≈ 2.88 V</div></td></tr><tr><td class="cell-independent">V_L(p-p)</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_R/V_L/V_C/V_ab 직접; I, Z_T 도출)</span></div><div class="expected">예상 <span class="v">1.81 V</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">I·X_L ≈ 1.81 V</div></td></tr><tr><td class="cell-independent">V_C(p-p)</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_R/V_L/V_C/V_ab 직접; I, Z_T 도출)</span></div><div class="expected">예상 <span class="v">4.59 V</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">I·X_C ≈ 4.59 V</div></td></tr><tr><td class="cell-independent">I(p-p)</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_R/V_L/V_C/V_ab 직접; I, Z_T 도출)</span></div><div class="expected">예상 <span class="v">2.88 mA</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E/Z ≈ 2.88 mA</div></td></tr><tr><td class="cell-independent">Z_T</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_R/V_L/V_C/V_ab 직접; I, Z_T 도출)</span></div><div class="expected">예상 <span class="v">1388.5 Ω</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">√(R²+(X_L−X_C)²) ≈ 1388.50 Ω</div></td></tr><tr><td class="cell-independent">V_ab(p-p)</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_R/V_L/V_C/V_ab 직접; I, Z_T 도출)</span></div><div class="expected">예상 <span class="v">2.78 V</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">I·|X_L−X_C| ≈ 2.78 V</div></td></tr></tbody></table><div class="card-foot"><span>측정 6</span><span>계산 6</span><span>환산 0</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 9 · Part 1 · Table 9.1</div><div class="model">R(1kΩ)∥L(10mH) 병렬, R_s(10Ω) sense (FIG 9.1/9.2/9.3), Es=4 Vpp @ 10 kHz. Fig 9.2: R_s가 하단 귀환 경로(I_s). Fig 9.3: R_s가 인덕터 가지 내(I_L).</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 10 kHz (nominal) · L = 10 mH (nominal, R_l ≈ 0) · 수직감도 Ch2 = mV scale (V_Rs 측정), 수평감도 = 20 μs/div · X_L ≈ 628.32 Ω</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">항목 = [I_s(p-p), I_L(p-p), I_R(p-p), V_Rs(p-p) (for I_s), V_Rs(p-p) (for I_L)]</span></div></div><table class="data"><thead><tr><th>항목</th><th>Calculated</th><th>Measured</th></tr></thead><tbody><tr><td class="cell-independent">I_s(p-p)</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">√(I_R²+I_L²) ≈ 7.52 mA</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_Rs/V_R 직접 → I 환산)</span></div><div class="expected">예상 <span class="v">7.52 mA</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">I_L(p-p)</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E/X_L ≈ 6.37 mA</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_Rs/V_R 직접 → I 환산)</span></div><div class="expected">예상 <span class="v">6.37 mA</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">I_R(p-p)</td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E/R ≈ 4.00 mA</div></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_Rs/V_R 직접 → I 환산)</span></div><div class="expected">예상 <span class="v">4.00 mA</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">V_Rs(p-p) (for I_s)</td><td class="cell-independent" style="background:#e8e8e8;color:#999;">—</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_Rs/V_R 직접 → I 환산)</span></div><div class="expected">예상 <span class="v">75.18 mV</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">V_Rs(p-p) (for I_L)</td><td class="cell-independent" style="background:#e8e8e8;color:#999;">—</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (V_Rs/V_R 직접 → I 환산)</span></div><div class="expected">예상 <span class="v">63.66 mV</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 5</span><span>계산 3</span><span>환산 0</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 9 · Part 1 · Table 9.2</div><div class="model">dual-trace로 E와 I_s(Fig 9.2 V_Rs) 사이 각 θ_s, E와 I_L(Fig 9.3 V_Rs) 사이 각 θ_L 측정.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · f = 10 kHz (nominal) · 수평감도 = 20 μs/div, T = 100 μs → D_1 = 5 div · θ_L 정의 주의: Table 9.2의 θ_L = E와 I_L 사이 각 (이상적 인덕터에서 90°). Table 9.4의 θ_L과 다른 양.</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">항목 = [θ_s, θ_L]</span></div></div><table class="data"><thead><tr><th>항목</th><th>D_1<span class="unit">div</span></th><th>D_2<span class="unit">div</span></th><th>Angle<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-independent">θ_s</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">0.804</span><span class="conf">[중]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">(D_2/D_1)·360°</div><div class="expected">예상 <span class="v">57.86</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">θ_L</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (한 주기 폭)</span></div><div class="expected">예상 <span class="v">5.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope (위상차 폭)</span></div><div class="expected">예상 <span class="v">1.250</span><span class="conf">[중]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>D_1, D_2 환산</span></div><div class="formula">(D_2/D_1)·360°</div><div class="expected">예상 <span class="v">90.00</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 4</span><span>계산 0</span><span>환산 2</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 9 · Part 1 · Table 9.4</div><div class="model">페이저 다이어그램(Part 1(m)) — E∠0°를 기준으로 측정된 I_R, I_L 페이저로부터 I_s, θ_s, θ_L, θ_T 산출.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal), reference ∠0° · I_R = 4.00 mA ∠0° (V_R = E이므로 동위상) · I_L = 6.37 mA ∠−90° (이상적 인덕터) · θ_L 정의: I_s와 I_L 사이 각 (Part 1(m) — Table 9.2의 E와 I_L 사이 각과 다른 양)</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>I_s (diagram)<span class="unit">mA</span></th><th>I_s (measured)<span class="unit">mA</span></th><th>θ_s<span class="unit">°</span></th><th>θ_L<span class="unit">°</span></th><th>θ_T<span class="unit">°</span></th></tr></thead><tbody><tr><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>I_R, I_L 페이저 합</span></div><div class="formula">√(I_R²+I_L²)</div><div class="expected">예상 <span class="v">7.52</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>V_Rs(for I_s)/R_s 환산</span></div><div class="formula">V_Rs(I_s) / R_s(meas)</div><div class="expected">예상 <span class="v">7.52</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>페이저 다이어그램 (E ↔ I_s 각)</span></div><div class="formula">tan⁻¹(I_L/I_R)</div><div class="expected">예상 <span class="v">57.86</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span><span>페이저 다이어그램 (I_s ↔ I_L 각)</span></div><div class="formula">90° − θ_s</div><div class="expected">예상 <span class="v">32.14</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">abs(θ_s) + abs(θ_L) ≈ 90.00°</div></td></tr></tbody></table><div class="card-foot"><span>측정 0</span><span>계산 1</span><span>환산 4</span><span>고정 0</span></div></div>
+
+<div class="doc-foot">
+  <div>사용한 소스:</div>
+  <div class="src">강의노트\11주차 강의노트.pdf<br>output\11주차 예비보고서(수정본).md<br>책\20260509_012203.jpg<br>책\20260509_012222.jpg<br>책\20260509_012230.jpg<br>책\20260509_012245.jpg<br>책\20260509_012301.jpg<br>책\20260509_012311.jpg<br>책\20260509_012326.jpg<br>책\20260509_012342.jpg<br>책\20260509_012353.jpg<br>책\20260509_012408.jpg<br>책\20260509_012428.jpg<br>책\20260509_012456.jpg<br>책\20260509_012512.jpg<br>책\20260509_012521.jpg<br>책\20260509_012531.jpg<br>책\20260509_012542.jpg<br>책\20260509_012551.jpg<br>책\20260509_012613.jpg<br>책\20260509_012622.jpg<br>책\20260509_012639.jpg<br>책\20260509_012655.jpg<br>책\20260509_012739.jpg<br>책\20260509_012750.jpg<br>책\20260509_012814.jpg<br>책\20260509_012826.jpg<br>책\20260509_012847.jpg<br>책\20260509_012925.jpg<br>책\20260509_012935.jpg<br>책\20260509_013308.jpg</div>
+  <div style="margin-top:1mm;">생성: 2026-05-20 00:58 · 측정값 옆 예상값은 이론 계산값이며 ± 신뢰도 라벨(상/중/하)이 함께 표시됩니다.</div>
+</div>
+
+</body>
+</html>

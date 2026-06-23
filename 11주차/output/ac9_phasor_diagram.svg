@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 720" font-family="-apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4fc3f7"/>
+    </marker>
+    <marker id="arrowL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ff7043"/>
+    </marker>
+    <marker id="arrowS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#aed581"/>
+    </marker>
+    <marker id="arrowE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffd54f"/>
+    </marker>
+    <marker id="axisArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="720" fill="#0d0d11"/>
+
+  <!-- Title -->
+  <text x="460" y="34" fill="#e8e8ea" font-size="20" font-weight="600" text-anchor="middle">AC Ch 9 — 병렬 R-L 회로 페이저 (복소평면)</text>
+  <text x="460" y="56" fill="#888" font-size="13" text-anchor="middle">R = 1 kΩ, L = 10 mH, f = 10 kHz, E = 4 V(p-p) — 단위: mA(p-p)</text>
+
+  <!-- Grid -->
+  <g stroke="#1f1f25" stroke-width="1">
+    <line x1="120" y1="120" x2="120" y2="620"/>
+    <line x1="220" y1="120" x2="220" y2="620"/>
+    <line x1="320" y1="120" x2="320" y2="620"/>
+    <line x1="420" y1="120" x2="420" y2="620"/>
+    <line x1="520" y1="120" x2="520" y2="620"/>
+    <line x1="620" y1="120" x2="620" y2="620"/>
+    <line x1="720" y1="120" x2="720" y2="620"/>
+    <line x1="820" y1="120" x2="820" y2="620"/>
+
+    <line x1="120" y1="120" x2="820" y2="120"/>
+    <line x1="120" y1="220" x2="820" y2="220"/>
+    <line x1="120" y1="320" x2="820" y2="320"/>
+    <line x1="120" y1="420" x2="820" y2="420"/>
+    <line x1="120" y1="520" x2="820" y2="520"/>
+    <line x1="120" y1="620" x2="820" y2="620"/>
+  </g>
+
+  <!-- Axes: origin at (220, 220). 1 mA = 50 px -->
+  <!-- Real axis (Re) -->
+  <line x1="120" y1="220" x2="820" y2="220" stroke="#888" stroke-width="1.5" marker-end="url(#axisArrow)"/>
+  <text x="830" y="225" fill="#aaa" font-size="13">Re (mA) — E 방향</text>
+
+  <!-- Imag axis (Im) -->
+  <line x1="220" y1="120" x2="220" y2="620" stroke="#888" stroke-width="1.5" marker-end="url(#axisArrow)" marker-start="url(#axisArrow)"/>
+  <text x="232" y="135" fill="#aaa" font-size="13">+Im (j) — 90° lead</text>
+  <text x="232" y="615" fill="#aaa" font-size="13">−Im (−j) — 90° lag</text>
+
+  <!-- Tick labels on Re -->
+  <text x="320" y="240" fill="#666" font-size="11" text-anchor="middle">+2</text>
+  <text x="420" y="240" fill="#666" font-size="11" text-anchor="middle">+4</text>
+  <text x="520" y="240" fill="#666" font-size="11" text-anchor="middle">+6</text>
+  <text x="620" y="240" fill="#666" font-size="11" text-anchor="middle">+8</text>
+  <text x="720" y="240" fill="#666" font-size="11" text-anchor="middle">+10</text>
+  <text x="170" y="240" fill="#666" font-size="11" text-anchor="middle">−1</text>
+
+  <!-- Tick labels on Im -->
+  <text x="210" y="324" fill="#666" font-size="11" text-anchor="end">−2</text>
+  <text x="210" y="424" fill="#666" font-size="11" text-anchor="end">−4</text>
+  <text x="210" y="524" fill="#666" font-size="11" text-anchor="end">−6</text>
+
+  <text x="210" y="174" fill="#666" font-size="11" text-anchor="end">+2</text>
+
+  <!-- E voltage reference (small, on +Re) -->
+  <line x1="220" y1="220" x2="290" y2="220" stroke="#ffd54f" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowE)"/>
+  <text x="295" y="216" fill="#ffd54f" font-size="12" font-weight="600">E (기준, 0°)</text>
+
+  <!-- I_R: 4 mA along +Re => (220 + 4*50=200, 220) = (420, 220) -->
+  <line x1="220" y1="220" x2="420" y2="220" stroke="#4fc3f7" stroke-width="3.5" marker-end="url(#arrowR)"/>
+  <text x="320" y="208" fill="#4fc3f7" font-size="14" font-weight="700" text-anchor="middle">I_R = 4 mA</text>
+  <text x="320" y="194" fill="#4fc3f7" font-size="11" text-anchor="middle">(E와 동위상, 0°)</text>
+
+  <!-- I_L: 6.37 mA along -Im => (220, 220 + 6.37*50=318.5) = (220, 538.5) -->
+  <line x1="220" y1="220" x2="220" y2="538.5" stroke="#ff7043" stroke-width="3.5" marker-end="url(#arrowL)"/>
+  <text x="160" y="380" fill="#ff7043" font-size="14" font-weight="700">I_L = 6.37 mA</text>
+  <text x="160" y="396" fill="#ff7043" font-size="11">(E보다 90° 뒤짐)</text>
+  <text x="160" y="410" fill="#ff7043" font-size="11">= −j6.37 mA</text>
+
+  <!-- Construction: dashed parallelogram lines -->
+  <line x1="420" y1="220" x2="420" y2="538.5" stroke="#4fc3f7" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+  <line x1="220" y1="538.5" x2="420" y2="538.5" stroke="#ff7043" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+
+  <!-- I_s: total = 4 - j6.37, magnitude 7.52 mA, angle -57.9° -->
+  <!-- Endpoint at (420, 538.5) -->
+  <line x1="220" y1="220" x2="420" y2="538.5" stroke="#aed581" stroke-width="4" marker-end="url(#arrowS)"/>
+  <text x="350" y="430" fill="#aed581" font-size="15" font-weight="700">I_s = 7.52 mA</text>
+  <text x="350" y="446" fill="#aed581" font-size="12">= 4 − j6.37 mA</text>
+  <text x="350" y="460" fill="#aed581" font-size="12">∠ −57.9°</text>
+
+  <!-- Angle arc θ_s: from +Re to I_s direction (between 0° and -57.9°) -->
+  <!-- Arc from (270, 220) sweeping clockwise to angle -57.9° -->
+  <path d="M 290 220 A 70 70 0 0 1 257.13 279.39" fill="none" stroke="#ffd54f" stroke-width="2"/>
+  <text x="305" y="265" fill="#ffd54f" font-size="13" font-weight="700">θ_s = −57.9°</text>
+  <text x="305" y="281" fill="#ffd54f" font-size="11">(E와 I_s 사이)</text>
+
+  <!-- Angle arc θ_L: from I_s direction to -Im (between -57.9° and -90°), 32.1° -->
+  <!-- Arc with smaller radius near origin pointing along I_s and -Im -->
+  <path d="M 246.31 271.96 A 55 55 0 0 1 220 275" fill="none" stroke="#ce93d8" stroke-width="2"/>
+  <text x="120" y="280" fill="#ce93d8" font-size="13" font-weight="700">θ_L = 32.1°</text>
+  <text x="120" y="296" fill="#ce93d8" font-size="11">(I_s와 I_L 사이)</text>
+
+  <!-- Sum indicator (small) -->
+  <text x="430" y="555" fill="#aed581" font-size="11">합 = I_R + I_L (페이저 합)</text>
+
+  <!-- Legend / formula box -->
+  <g transform="translate(540, 470)">
+    <rect width="320" height="170" fill="#18181d" stroke="#2a2a32" rx="8"/>
+    <text x="14" y="22" fill="#e8e8ea" font-size="13" font-weight="600">핵심 식</text>
+    <text x="14" y="44" fill="#4fc3f7" font-size="12">I_R = E/R = 4/1000 = 4 mA</text>
+    <text x="14" y="62" fill="#ff7043" font-size="12">I_L = E/X_L = 4/628.3 = 6.37 mA</text>
+    <text x="14" y="80" fill="#aed581" font-size="12">|I_s| = √(I_R² + I_L²) = 7.52 mA</text>
+    <text x="14" y="98" fill="#ffd54f" font-size="12">θ_s = arctan(−I_L/I_R) = −57.9°</text>
+    <text x="14" y="116" fill="#ce93d8" font-size="12">θ_L = 90° − |θ_s| = 32.1°</text>
+    <text x="14" y="138" fill="#aaa" font-size="11">θ_T = |θ_s| + |θ_L| = 90° (이상값)</text>
+    <text x="14" y="156" fill="#aaa" font-size="11">Z_T = E/I_s = 4 V / 7.52 mA ≈ 532 Ω</text>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="460" y="685" fill="#888" font-size="12" text-anchor="middle">병렬 R-L: V 공통, I 분기. I_R은 실수축, I_L은 음의 허수축 → 합 I_s는 4사분면</text>
+  <text x="460" y="703" fill="#666" font-size="11" text-anchor="middle">Z_T(532 Ω) &lt; R(1000 Ω), Z_T(532 Ω) &lt; X_L(628 Ω) — 병렬은 항상 가장 작은 가지보다 작다</text>
+</svg>

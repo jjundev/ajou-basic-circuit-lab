@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>14주차 측정 체크리스트</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 12mm 12mm 14mm 12mm;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #111;
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 5mm;
+    border-bottom: 1px solid #1a1a1a;
+    margin-bottom: 6mm;
+  }
+  .header .left .label {
+    font-size: 7.5pt;
+    letter-spacing: 0.45em;
+    color: #888;
+    margin-bottom: 2mm;
+  }
+  .header .left .title {
+    font-size: 18pt;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .header .right {
+    text-align: right;
+    font-size: 8pt;
+    color: #666;
+    line-height: 1.6;
+  }
+  .header .right .course { color: #111; font-weight: 500; }
+
+  /* Summary box */
+  .summary {
+    border: 1px solid #d0d0d0;
+    padding: 4mm 5mm;
+    margin-bottom: 6mm;
+    font-size: 8.5pt;
+    color: #333;
+    background: #fafafa;
+  }
+  .summary h2 {
+    margin: 0 0 2mm 0;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #111;
+  }
+  .summary .stats {
+    display: flex;
+    gap: 6mm;
+    flex-wrap: wrap;
+  }
+  .summary .stat .k {
+    color: #888;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .summary .stat .v {
+    color: #111;
+    font-size: 11pt;
+    font-weight: 500;
+  }
+  .summary .meta {
+    margin-top: 3mm;
+    font-size: 7.5pt;
+    color: #666;
+  }
+
+  /* Table cards — atomic 단위는 카드 전체가 아닌 tr (행). 헤더 묶음은 다음 형제와 결합 유지. */
+  .card {
+    break-inside: auto;
+    page-break-inside: auto;
+    border: 1px solid #1a1a1a;
+    margin-bottom: 0;
+  }
+  .card + .card {
+    margin-top: 5mm;
+  }
+  .card-head {
+    padding: 3mm 4mm;
+    background: #1a1a1a;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-head .title {
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  .card-head .model {
+    font-size: 8pt;
+    color: #d8d8d8;
+    font-weight: 300;
+  }
+  .card-meta {
+    padding: 2.5mm 4mm;
+    border-bottom: 1px solid #d0d0d0;
+    font-size: 8pt;
+    color: #444;
+    background: #fafafa;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-meta .row { display: flex; gap: 4mm; }
+  .card-meta .k {
+    color: #888;
+    min-width: 18mm;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 7pt;
+    padding-top: 0.5mm;
+  }
+  .card-meta .v { color: #111; flex: 1; }
+
+  .card-inputs {
+    border-bottom: 1px solid #d0d0d0;
+    padding: 2mm 4mm;
+    background: #fff;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .card-inputs .inputs-title {
+    font-size: 7pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5mm;
+  }
+  .card-inputs .inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(38mm, 1fr));
+    gap: 2mm;
+  }
+
+  /* Data table */
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+  table.data thead {
+    display: table-header-group;  /* 페이지 넘김 시 헤더 행 자동 반복 */
+  }
+  table.data tbody tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  table.data th, table.data td {
+    border: 1px solid #d0d0d0;
+    padding: 2.5mm 2mm;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.35;
+  }
+  table.data thead th {
+    background: #f0f0f0;
+    color: #111;
+    font-weight: 600;
+    font-size: 8pt;
+    padding: 2.5mm 2mm 2mm 2mm;
+  }
+  table.data thead th .unit {
+    display: block;
+    font-size: 7pt;
+    color: #777;
+    font-weight: 400;
+    margin-top: 0.5mm;
+  }
+
+  /* Cell kinds */
+  .badge {
+    display: inline-block;
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.6mm 1.5mm;
+    border-radius: 1mm;
+    vertical-align: middle;
+    line-height: 1;
+  }
+  .badge-measure { background: #111; color: #fff; }
+  .badge-compute { background: #d8d8d8; color: #444; }
+  .badge-derived { background: #5a7a9a; color: #fff; }
+  .badge-fixed   { background: #ffeaa7; color: #6a4f00; }
+  .badge-input   { background: #fff3e0; color: #bf6a00; }
+
+  td.cell-independent {
+    background: #f6f6f6;
+    color: #444;
+    font-weight: 500;
+  }
+  /* independent cell that is also DMM-measured (v3: kind: independent | measured: true).
+     Reuses badge-measure styling but keeps the gray independent background so it remains visually
+     anchored as a row key. */
+  td.cell-independent.measured-hint {
+    background: #f6f6f6;
+    text-align: left;
+    padding: 2mm;
+  }
+  td.cell-independent.measured-hint .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #888;
+    margin-bottom: 1mm;
+  }
+  td.cell-independent.measured-hint .nominal {
+    color: #111;
+    font-weight: 600;
+    font-size: 8.5pt;
+  }
+  td.cell-independent.measured-hint .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-independent.measured-hint .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-measure {
+    background: #fff;
+    text-align: left;
+    padding: 2mm;
+  }
+  td.cell-measure .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #888;
+    margin-bottom: 1mm;
+  }
+  td.cell-measure .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-measure .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  td.cell-measure .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-measure .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  .cell-input {
+    background: #fff8ed;
+    border: 1px solid #e2c69a;
+    padding: 1.5mm;
+    text-align: left;
+    color: #333;
+  }
+  .cell-input .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #9a6400;
+    margin-bottom: 1mm;
+  }
+  .cell-input .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  .cell-input .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  .cell-input .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  .cell-input .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  td.cell-compute {
+    background: #f4f4f4;
+    text-align: left;
+    padding: 2mm;
+    color: #333;
+  }
+  td.cell-compute .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #777;
+    margin-bottom: 1mm;
+  }
+  td.cell-compute .formula {
+    font-family: 'Consolas', 'Menlo', monospace;
+    font-size: 7.5pt;
+    color: #222;
+  }
+  /* derived (v4): 측정값으로부터 환산해 채우는 셀. measured(흰)·computed(짙회)의 중간 톤 +
+     좌측 4px 회청 보더로 흑백 인쇄에서도 식별 단서 잔존. */
+  td.cell-derived {
+    background: #eef4fa;
+    border-left: 4px solid #5a7a9a;
+    text-align: left;
+    padding: 2mm;
+    color: #333;
+  }
+  td.cell-derived .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: #5a7a9a;
+    margin-bottom: 1mm;
+  }
+  td.cell-derived .formula {
+    font-family: 'Consolas', 'Menlo', monospace;
+    font-size: 7.5pt;
+    color: #222;
+  }
+  td.cell-derived .input-strip {
+    border-top: 1px dashed #aaa;
+    padding-top: 1.5mm;
+    margin-bottom: 1.5mm;
+  }
+  td.cell-derived .input-strip .cell-input {
+    border: 0;
+    padding: 0;
+  }
+  td.cell-derived .ref {
+    color: #666;
+    font-style: italic;
+    font-size: 8pt;
+    margin-bottom: 1mm;
+  }
+  td.cell-derived .expected {
+    font-size: 7.5pt;
+    color: #444;
+  }
+  td.cell-derived .expected .v {
+    color: #111;
+    font-weight: 600;
+  }
+  td.cell-derived .expected .conf {
+    color: #888;
+    font-size: 6.5pt;
+    margin-left: 1mm;
+  }
+  td.cell-derived .blank {
+    display: block;
+    border-bottom: 1px solid #999;
+    height: 3mm;
+    margin-top: 1mm;
+  }
+  td.cell-fixed {
+    background: #fff9e6;
+    color: #6a4f00;
+    font-weight: 500;
+  }
+  td.cell-fixed .top {
+    font-size: 7pt;
+    color: #a07a00;
+    margin-bottom: 0.5mm;
+  }
+
+  /* Formula box for long formulas */
+  .formula-box {
+    padding: 2.5mm 4mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7.5pt;
+    color: #333;
+    background: #fafafa;
+    font-family: 'Consolas', 'Menlo', monospace;
+    line-height: 1.6;
+  }
+  .formula-box .k { color: #888; margin-right: 2mm; }
+
+  .card-foot {
+    padding: 2mm 4mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7.5pt;
+    color: #666;
+    background: #fafafa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4mm;
+  }
+
+  /* Footer */
+  .doc-foot {
+    margin-top: 6mm;
+    padding-top: 3mm;
+    border-top: 1px solid #d0d0d0;
+    font-size: 7pt;
+    color: #888;
+    line-height: 1.6;
+  }
+  .doc-foot .src { font-family: 'Consolas', 'Menlo', monospace; color: #555; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="left">
+    <div class="label">P R E - L A B&nbsp;&nbsp;C H E C K L I S T</div>
+    <div class="title">14주차 측정 체크리스트</div>
+  </div>
+  <div class="right">
+    <div class="course">기초전기실험</div>
+    <div>2026-06-01 00:14</div>
+  </div>
+</div>
+
+<div class="summary">
+  <h2>요약</h2>
+  <div class="stats">
+    <div class="stat"><div class="k">Tables</div><div class="v">7</div></div>
+    <div class="stat"><div class="k">측정 셀</div><div class="v">88</div></div>
+    <div class="stat"><div class="k">계산 셀</div><div class="v">7</div></div>
+    <div class="stat"><div class="k">환산 셀</div><div class="v">57</div></div>
+    <div class="stat"><div class="k">고정 셀</div><div class="v">0</div></div>
+    <div class="stat"><div class="k">사용 기기</div><div class="v" style="font-size:9pt;">DMM (저항 모드) · Oscilloscope · 함수발생기 + 주파수 카운터</div></div>
+  </div>
+  <div class="meta">우승 예비보고서: 14주차_예비보고서.md · 캐시: v5 신선</div>
+</div>
+
+<div class="card"><div class="card-head"><div class="title">AC 13 · Part 1 · Fig 13.3 (결선 전 실측)</div><div class="model">Fig 13.3 (a) — 결선 전 DMM 저항 모드로 직렬 저항 R(Part 1 220Ω)과 코일 내부저항 R_l 실측. R_l 은 코일에 따라 수~수십 Ω 가능, 이론 예측은 R_l ≈ 0 가정 → 결과보고서에서 R_T = R + R_l 보정.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">row-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">DMM 모드 = 저항 (Ω) · 회로 전원 차단, 소자 단자 분리 후 측정 · L = 10 mH (nominal), C = 0.1 μF (nominal)</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">항목 = [R (Part 1) 220 Ω, R_l (코일 내부저항)]</span></div></div><table class="data"><thead><tr><th>항목</th><th>Measured<span class="unit">Ω</span></th></tr></thead><tbody><tr><td class="cell-independent">R (Part 1) 220 Ω</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>DMM (저항 모드)</span></div><div class="expected">예상 <span class="v">220</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">R_l (코일 내부저항)</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>DMM (저항 모드)</span></div><div class="expected">예상 <span class="v">≈0 (이론 가정)</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 2</span><span>계산 0</span><span>환산 0</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 13 · Part 1 · Table 13.1 (Part 1 공진 주파수)</div><div class="model">Fig 13.3 (b) — nameplate L = 10 mH, C = 0.1 μF 로 공진 ω_s, f_s 이론 계산 (측정값 아님, 명판값 기반).</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">L = 10 mH (nominal) · C = 0.1 μF (nominal) · LC = 1.0×10⁻⁹, √(LC) = 3.1623×10⁻⁵ s</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>ω_s<span class="unit">rad/s</span></th><th>f_s<span class="unit">Hz</span></th></tr></thead><tbody><tr><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/√(LC) ≈ 31623</div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2π√(LC)) ≈ 5033</div></td></tr></tbody></table><div class="card-foot"><span>측정 0</span><span>계산 2</span><span>환산 0</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 13 · Part 1 · Table 13.2 (Part 1 — Low-Q, R = 220 Ω)</div><div class="model">Fig 13.3 직렬 RLC 폐회로 (E_s — R 220Ω — L 10mH — C 0.1μF). 각 주파수에서 오실로스코프로 V_C·V_L·V_R(p-p) 측정 → I=V_R/R, Z_i=E/I 환산. E 는 매 주파수마다 4 Vp-p 로 재설정. (c)~(e) 절차.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">column-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal; 강의노트 4 Vpp override of 책 8 Vpp) · R = 220 Ω (measured) · L = 10 mH (nominal, R_l ≈ 0) · C = 0.1 μF (nominal) · f_s ≈ 5033 Hz (calc) · X_L(f_s) = X_C(f_s) ≈ 316.23 Ω, Q_1 ≈ 1.44, BW_1 ≈ 3502 Hz</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">Frequency = [500 Hz, 1000 Hz, 2000 Hz, 3000 Hz, 4000 Hz, 5000 Hz, 6000 Hz, 7000 Hz, 8000 Hz, 9000 Hz, 10000 Hz, f_s ≈ 5033 Hz, 1.1 f_s ≈ 5536 Hz, 0.9 f_s ≈ 4530 Hz]</span></div></div><table class="data"><thead><tr><th>Frequency</th><th>V_C(p-p)<span class="unit">V</span></th><th>V_L(p-p)<span class="unit">V</span></th><th>V_R(p-p)<span class="unit">V</span></th><th>I_p-p<span class="unit">mA</span></th><th>Z_i<span class="unit">Ω</span></th></tr></thead><tbody><tr><td class="cell-independent">500 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.03</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.04</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.28</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">1.27</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">3159</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">1000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.12</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.16</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.57</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">2.59</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">1544</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">2000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.51</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.71</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.25</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">5.67</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">705</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">3000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.22</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.85</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">2.16</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">9.84</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">407</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">4000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">6.02</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">3.80</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">3.33</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">15.13</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">264</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">5000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.79</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.71</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">18.18</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">220</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">6000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.30</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">6.11</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">3.57</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">16.21</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">247</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">7000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">2.97</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.75</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">2.88</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">13.08</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">306</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">8000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">2.12</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.36</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">2.35</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">10.67</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">375</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">9000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.58</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.06</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.97</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">8.96</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">447</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">10000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.23</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.85</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.70</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">7.72</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">518</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">f_s ≈ 5033 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.75</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.75</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">18.18</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">220</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">1.1 f_s ≈ 5536 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.04</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">6.10</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">3.86</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">17.53</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">228</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">0.9 f_s ≈ 4530 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">6.11</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.95</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">3.83</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">17.40</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">230</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 42</span><span>계산 0</span><span>환산 28</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 13 · Part 1 · Table 13.5 (Part 1(m) — E·V_R 동상 주파수)</div><div class="model">Fig 13.3 에서 R 을 C 위치로 옮기고 E 와 V_R 을 dual-trace 오실로스코프로 동시 관찰. 주파수를 0~10 kHz 가변하며 둘이 동상이 되는 점을 찾아 주파수 카운터로 읽는다. V_R ∝ I 이므로 동상점 = 공진점 f_s (Z_i 순저항 = R 최소).</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal) · R = 220 Ω (measured) · 동상 조건 = 허수부 X = 0 → f = f_s</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>f (E·V_R 동상)<span class="unit">Hz</span></th></tr></thead><tbody><tr><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>함수발생기 + 주파수 카운터</span></div><div class="expected">예상 <span class="v">5033</span><span class="conf">[상]</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 1</span><span>계산 0</span><span>환산 0</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 13 · Part 2 · Table 13.6 (Part 2 — High-Q 셋업, R = 33 Ω)</div><div class="model">Fig 13.3 에서 220Ω 을 33Ω 으로 교체. R_measured 는 DMM 저항모드 실측. L·C 불변이므로 ω_s, f_s 는 Part 1 과 동일 (명판값 계산).</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">L = 10 mH (nominal), C = 0.1 μF (nominal)</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>R_measured<span class="unit">Ω</span></th><th>ω_s<span class="unit">rad/s</span></th><th>f_s<span class="unit">Hz</span></th></tr></thead><tbody><tr><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>DMM (저항 모드)</span></div><div class="expected">예상 <span class="v">33</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/√(LC) ≈ 31623</div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">1/(2π√(LC)) ≈ 5033</div></td></tr></tbody></table><div class="card-foot"><span>측정 1</span><span>계산 2</span><span>환산 0</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 13 · Part 2 · Table 13.7 (Part 2 — High-Q, R = 33 Ω)</div><div class="model">Fig 13.3 직렬 RLC (E_s — R 33Ω — L 10mH — C 0.1μF). Part 1 절차 1(c)~1(e) 반복. 공진 부근 V_L·V_C 가 매우 커지므로 10:1 프로브 + GND 하단 + positive excursion×2 로 p-p 환산. 헤더 순서 V_R · V_L · V_C (책 Table 13.7 그대로).</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">column-major</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p, nominal; 강의노트 override) · R = 33 Ω (measured) · L = 10 mH (nominal, R_l ≈ 0) · C = 0.1 μF (nominal) · f_s ≈ 5033 Hz (calc) · Q_2 ≈ 9.58, BW_2 ≈ 525 Hz, 공진 시 V_L=V_C ≈ 38.3 Vp-p (≈ Q_2·E)</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">Frequency = [500 Hz, 1000 Hz, 2000 Hz, 3000 Hz, 4000 Hz, 5000 Hz, 6000 Hz, 7000 Hz, 8000 Hz, 9000 Hz, 10000 Hz, f_s ≈ 5033 Hz, 1.1 f_s ≈ 5536 Hz, 0.9 f_s ≈ 4530 Hz]</span></div></div><table class="data"><thead><tr><th>Frequency</th><th>V_R(p-p)<span class="unit">V</span></th><th>V_L(p-p)<span class="unit">V</span></th><th>V_C(p-p)<span class="unit">V</span></th><th>I_p-p<span class="unit">mA</span></th><th>Z_i<span class="unit">Ω</span></th></tr></thead><tbody><tr><td class="cell-independent">500 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.04</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.04</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.04</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">1.27</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">3152</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">1000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.09</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.16</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.16</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">2.62</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">1529</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">2000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.20</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.75</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.74</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">5.96</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">671</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">3000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.38</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">2.19</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">6.18</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">11.64</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">344</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">4000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.88</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">6.69</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">10.59</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">26.63</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">150</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">5000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">3.97</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">37.78</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">38.28</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">120.26</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">33</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">6000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.13</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">12.94</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">9.11</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">34.33</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">117</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">7000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.61</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">8.18</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.23</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">18.60</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">215</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">8000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.43</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">6.58</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">2.60</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">13.09</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">305</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">9000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.34</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.80</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.81</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">10.26</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">390</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">10000 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">0.28</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">5.34</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.35</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">8.50</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">470</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">f_s ≈ 5033 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">4.00</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">38.33</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">38.33</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">121.21</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">33</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">1.1 f_s ≈ 5536 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.92</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">20.22</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">16.71</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">58.14</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">69</span></div><span class="blank"></span></td></tr><tr><td class="cell-independent">0.9 f_s ≈ 4530 Hz</td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">1.77</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">15.29</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-measure"><div class="top"><span class="badge badge-measure">측정</span><span>Oscilloscope</span></div><div class="expected">예상 <span class="v">18.87</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">V_R(p-p) / R</div><div class="expected">예상 <span class="v">53.71</span></div><span class="blank"></span></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">↑ 같은 행 측정 셀</div><div class="formula">E_p-p / I_p-p</div><div class="expected">예상 <span class="v">74</span></div><span class="blank"></span></td></tr></tbody></table><div class="card-foot"><span>측정 42</span><span>계산 0</span><span>환산 28</span><span>고정 0</span></div></div>
+<div class="card"><div class="card-head"><div class="title">AC 13 · Part 2 · Table 13.8 (Part 2(c) — 새 최대 전류)</div><div class="model">Part 2(c) — 공진 시 |Z_T|=R 이므로 I_max=E/R 계산 후, Graph 13.2 에 그린 I_p-p 곡선의 첨두값(실측 그래프 읽기)과 비교. R=220→33 으로 I_max 가 약 6.67배 증가.</div></div><div class="card-meta"><div class="row"><span class="k">표 양식</span><span class="v">single-row</span></div><div class="row" style="margin-top:1mm;"><span class="k">고정조건</span><span class="v">E = 4 V (Vp-p) · R = 33 Ω (measured), 이상 인덕터 R_l ≈ 0 가정 · 비교: Part 1 I_max ≈ 18.18 mA → Part 2 약 6.67배</span></div><div class="row" style="margin-top:1mm;"><span class="k">독립변수</span><span class="v">(단일 행)</span></div></div><table class="data"><thead><tr><th>I_max(p-p) 계산<span class="unit">mA</span></th><th>I_max(p-p) 그래프<span class="unit">mA</span></th><th>V_R(p-p) at f_s<span class="unit">V</span></th><th>Z_i(min) at f_s<span class="unit">Ω</span></th></tr></thead><tbody><tr><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">E_p-p/R = 4/33 ≈ 121.21</div></td><td class="cell-derived"><div class="top"><span class="badge badge-derived">환산</span></div><div class="ref">그래프 읽기</div><div class="formula">Graph 13.2 I_p-p 곡선 첨두값 ≈ 121.21</div><div class="expected">예상 <span class="v">121.21</span><span class="conf">[상]</span></div><span class="blank"></span></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">I_max·R = E_p-p ≈ 4.00</div></td><td class="cell-compute"><div class="top"><span class="badge badge-compute">계산</span></div><div class="formula">|Z_T|_min = R = 33</div></td></tr></tbody></table><div class="card-foot"><span>측정 0</span><span>계산 3</span><span>환산 1</span><span>고정 0</span></div></div>
+
+<div class="doc-foot">
+  <div>사용한 소스:</div>
+  <div class="src">책\20260526_214555.jpg<br>책\20260526_214605.jpg<br>책\20260526_214615.jpg<br>책\20260526_214623.jpg<br>책\20260526_214704.jpg<br>책\20260526_214721.jpg<br>강의노트\14주차.pdf<br>output\14주차_예비보고서.md</div>
+  <div style="margin-top:1mm;">생성: 2026-06-01 00:14 · 측정값 옆 예상값은 이론 계산값이며 ± 신뢰도 라벨(상/중/하)이 함께 표시됩니다.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!-- 측정값 기록용. 빈 칸 ____ 을 실험실에서 채우세요. -->
+<!-- 실험 미진행 시 해당 Part/Table 전체를 "- 실험을 진행하지 않았음." 한 줄로 대체하세요. -->
+<!-- generated from 측정체크리스트/요구목록.md @ 2026-05-20T23:24:16+09:00 -->
+
+# AC 0
+## Resistor Measurements
+### Table R.0
+<!-- 회로 모형: 결선 전 DMM 저항 모드로 모든 저항 실측 (AC 7/8/9 공통 입력값) -->
+
+- 고정조건
+  - DMM 모드 = 저항 (Ω)
+  - 회로 전원 차단 후 단자 분리 상태에서 측정
+
+- R = 1 kΩ일 때 Measured = 970(Ω)
+- R = 3.3 kΩ일 때 Measured = 3.27(kΩ)
+- R = 6.8 kΩ일 때 Measured = 6.72(kΩ)
+- R_s = 10 Ω일 때 Measured = 10(Ω)
+
+# AC 7
+## Part 1
+### Table 7.1
+<!-- 회로 모형: R(1kΩ)–C(0.47μF) 직렬, Es=4 Vpp @ 200 Hz (FIG 7.9). Ch1=E, Ch2=V_R. -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal; 강의노트 4 Vpp override)
+  - f = 200 Hz (nominal)
+  - C = 0.47 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 1 ms/div
+  - E(p-p) = 4 (V) [표 내 고정]
+
+- R = 1 kΩ일 때 V_R(p-p) Meas = 2.13(V), D_1 = 5(div), D_2 = ____(div)
+- θ_1 = 58.84(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+### Table 7.2
+<!-- 회로 모형: R(3.3kΩ)–C(0.47μF) 직렬, Es=4 Vpp @ 200 Hz (Table 7.1과 동일 회로, R 교체) -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 200 Hz (nominal)
+  - C = 0.47 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 1 ms/div
+  - E(p-p) = 4 (V) [표 내 고정]
+
+- R = 3.3 kΩ일 때 V_R(p-p) Meas = 3.54(V), θ_1 Meas = 26.00(°)
+
+### Table 7.3
+<!-- 회로 모형: R(6.8kΩ)–C(0.47μF) 직렬, Es=4 Vpp @ 200 Hz (Table 7.1과 동일 회로, R 교체) -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 200 Hz (nominal)
+  - C = 0.47 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 1 ms/div
+  - E(p-p) = 4 (V) [표 내 고정]
+
+- R = 6.8 kΩ일 때 V_R(p-p) Meas = 3.90(V), θ_1 Meas = 13.24(°)
+
+## Part 2
+### Table 7.4
+<!-- 회로 모형: R(1kΩ)–C(0.47μF) 직렬, R/C 위치 swap (FIG 7.11). Ch1=E, Ch2=V_C. -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 200 Hz (nominal)
+  - C = 0.47 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 1 ms/div
+  - E(p-p) = 4 (V) [표 내 고정]
+
+- R = 1 kΩ일 때 V_C(p-p) Meas = 3.34(V), D_1 = 5(div), D_2 = ____(div)
+- θ_1 = -31.83(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+### Table 7.5
+<!-- 회로 모형: R(3.3kΩ)–C(0.47μF) 직렬, R/C 위치 swap (Table 7.4와 동일 회로, R 교체) -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 200 Hz (nominal)
+  - C = 0.47 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 1 ms/div
+  - E(p-p) = 4 (V) [표 내 고정]
+
+- R = 3.3 kΩ일 때 V_C(p-p) Meas = 1.82(V), θ_2 Meas = -62.49(°)
+
+### Table 7.6
+<!-- 회로 모형: R(6.8kΩ)–C(0.47μF) 직렬, R/C 위치 swap (Table 7.4와 동일 회로, R 교체) -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 200 Hz (nominal)
+  - C = 0.47 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 1 ms/div
+  - E(p-p) = 4 (V) [표 내 고정]
+
+- R = 6.8 kΩ일 때 V_C(p-p) Meas = 1.01(V), θ_2 Meas = -75.06(°)
+
+## Part 3
+### Table 7.8
+<!-- 회로 모형: R–C 직렬을 X-Y(Lissajous) 모드로 측정. Ch1(vert)=E, X(horiz)=V_R (FIG 7.12). 수직감도 1 V/div. -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 200 Hz (nominal)
+  - C = 0.47 μF (nominal)
+  - y_m (vertical max) = E_peak / 1 V/div = 2.00 div (모든 R 케이스 공통)
+
+- GPT를 통한 이미지 분석으로 픽셀 개수를 세어 구하였다.
+- R = 1 kΩ일 때 y_o = 0.85(div), y_m = 1(div)
+- R = 3.3 kΩ일 때 y_o = 0.8(div), y_m = 1.7(div)
+- R = 6.8 kΩ일 때 y_o = 0.5(div), y_m = 1.8(div)
+
+# AC 8
+## Part 1
+### Table 8.1
+<!-- 회로 모형: R(1kΩ)–L(10mH) 직렬 (FIG 8.1), Es=4 Vpp @ 10 kHz, R_l ≈ 0 가정. (h) R, L 위치 swap 후 V_L 측정. -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 10 kHz (nominal)
+  - L = 10 mH (nominal, R_l ≈ 0)
+  - 수직감도 = 1 V/div, 수평감도 = 20 μs/div
+  - X_L = 2πfL ≈ 628.32 Ω, Z ≈ 1180.86 Ω, I ≈ 3.388 mA
+
+- R and θ_1일 때 V_R(p-p) = 3.1(V), D_1 = 5(div), D_2 = ____(div)
+- θ = 31.43(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+- L and θ_2일 때 V_L(p-p) = 1.93(V), D_1 = 5(div), D_2 = ____(div)
+- θ = 55.44(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+## Part 2
+### Table 8.3
+<!-- 회로 모형: R(1kΩ)–C(0.01μF) 직렬 (FIG 8.2), Es=4 Vpp @ 10 kHz. (h) R, C 위치 swap 후 V_C 측정. -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 10 kHz (nominal)
+  - C = 0.01 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 20 μs/div
+  - X_C = 1/(2πfC) ≈ 1591.55 Ω, Z ≈ 1879.66 Ω, I ≈ 2.128 mA
+
+- R and θ_1일 때 V_R(p-p) = 2.13(V), D_1 = 5(div), D_2 = ____(div)
+- θ = 56.67(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+- C and θ_2일 때 V_C(p-p) = 3.26(V), D_1 = 5(div), D_2 = ____(div)
+- θ = -33.82(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+## Part 3
+### Table 8.5
+<!-- 회로 모형: R(1kΩ)–L(10mH)–C(0.01μF) 직렬 (FIG 8.3), Es=4 Vpp @ 10 kHz. V_ab = 노드 a(R과 L 사이)와 GND 사이 = L+C 직렬 양단. -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 10 kHz (nominal)
+  - L = 10 mH (nominal, R_l ≈ 0)
+  - C = 0.01 μF (nominal)
+  - 수직감도 = 1 V/div, 수평감도 = 20 μs/div
+  - X_L ≈ 628.32 Ω, X_C ≈ 1591.55 Ω, X_T = X_L − X_C ≈ −963.23 Ω, Z ≈ 1388.50 Ω, I ≈ 2.881 mA
+
+- V_R(p-p)일 때 Measured = 2.65(V)
+- V_L(p-p)일 때 Measured = 1.65(V)
+- V_C(p-p)일 때 Measured = 4.14(V)
+- I(p-p)일 때 Measured = V_R(p-p) / R_mes로 구하세요.
+- Z_T일 때 Measured = E(p-p) / I(p-p)로 구하세요.
+- V_ab(p-p)일 때 Measured = 2.61(V)
+
+# AC 9
+## Part 1
+### Table 9.1
+<!-- 회로 모형: R(1kΩ)∥L(10mH) 병렬, R_s(10Ω) sense (FIG 9.1/9.2/9.3), Es=4 Vpp @ 10 kHz. Fig 9.2: R_s가 하단 귀환 경로(I_s). Fig 9.3: R_s가 인덕터 가지 내(I_L). -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 10 kHz (nominal)
+  - L = 10 mH (nominal, R_l ≈ 0)
+  - 수직감도 Ch2 = mV scale (V_Rs 측정), 수평감도 = 20 μs/div
+  - X_L ≈ 628.32 Ω
+
+- 전류는 DMM으로 rms값을 측정한 후, 2√2를 곱했다. 
+- I_s(p-p)일 때 Measured = 2.0833 * 2√2
+- I_L(p-p)일 때 Measured = 1.817 * 2√2
+- I_R(p-p)일 때 Measured = 1.106 * 2√2
+- V_Rs(p-p) (for I_s)일 때 Measured = 75(mV)
+- V_Rs(p-p) (for I_L)일 때 Measured = 65(mV)
+
+### Table 9.2
+<!-- 회로 모형: dual-trace로 E와 I_s(Fig 9.2 V_Rs) 사이 각 θ_s, E와 I_L(Fig 9.3 V_Rs) 사이 각 θ_L 측정. -->
+
+- 고정조건
+  - E = 4 V (Vp-p, nominal)
+  - f = 10 kHz (nominal)
+  - 수평감도 = 20 μs/div, T = 100 μs → D_1 = 5 div
+  - θ_L 정의 주의: Table 9.2의 θ_L = E와 I_L 사이 각 (이상적 인덕터에서 90°). Table 9.4의 θ_L과 다른 양.
+
+- θ_s일 때 D_1 = 5(div), D_2 = ____(div)
+- θ_s = 50.61(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+- θ_L일 때 D_1 = 5(div), D_2 = ____(div)
+- θ_L = 84.3(°)로 오실로스코프에서 확인하였음, 이를 바탕으로 D_2를 역산하세요.
+
+### Table 9.4
+<!-- 회로 모형: 페이저 다이어그램(Part 1(m)) — E∠0°를 기준으로 측정된 I_R, I_L 페이저로부터 I_s, θ_s, θ_L, θ_T 산출. -->
+- 측정 없음 — 전부 계산 컬럼이므로 보고서 작성 시 도출.
